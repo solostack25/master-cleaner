@@ -1,0 +1,721 @@
+YEAR,QUARTER,MONTH NAME,MONTH NUMBER,DATE,REGION,CHAPTER,STATE,FIELD OFFICE,REGION NUMBER
+2026,Q1,January,1,1/1/2026,NORTHEAST,New England,ME,Maine-Statewide,4
+2026,Q1,February,2,2/1/2026,NORTHEAST,New England,ME,Maine-Statewide,4
+2026,Q1,March,3,3/1/2026,NORTHEAST,New England,ME,Maine-Statewide,4
+2026,Q2,April,4,4/1/2026,NORTHEAST,New England,ME,Maine-Statewide,4
+2026,Q2,May,5,5/1/2026,NORTHEAST,New England,ME,Maine-Statewide,4
+2026,Q2,June,6,6/1/2026,NORTHEAST,New England,ME,Maine-Statewide,4
+2026,Q3,July,7,7/1/2026,NORTHEAST,New England,ME,Maine-Statewide,4
+2026,Q3,August,8,8/1/2026,NORTHEAST,New England,ME,Maine-Statewide,4
+2026,Q3,September,9,9/1/2026,NORTHEAST,New England,ME,Maine-Statewide,4
+2026,Q4,October,10,10/1/2026,NORTHEAST,New England,ME,Maine-Statewide,4
+2026,Q4,November,11,11/1/2026,NORTHEAST,New England,ME,Maine-Statewide,4
+2026,Q4,December,12,12/1/2026,NORTHEAST,New England,ME,Maine-Statewide,4
+2026,Q1,January,1,1/1/2026,NORTHEAST,New England,VT,Vermont-Statewide,4
+2026,Q1,February,2,2/1/2026,NORTHEAST,New England,VT,Vermont-Statewide,4
+2026,Q1,March,3,3/1/2026,NORTHEAST,New England,VT,Vermont-Statewide,4
+2026,Q2,April,4,4/1/2026,NORTHEAST,New England,VT,Vermont-Statewide,4
+2026,Q2,May,5,5/1/2026,NORTHEAST,New England,VT,Vermont-Statewide,4
+2026,Q2,June,6,6/1/2026,NORTHEAST,New England,VT,Vermont-Statewide,4
+2026,Q3,July,7,7/1/2026,NORTHEAST,New England,VT,Vermont-Statewide,4
+2026,Q3,August,8,8/1/2026,NORTHEAST,New England,VT,Vermont-Statewide,4
+2026,Q3,September,9,9/1/2026,NORTHEAST,New England,VT,Vermont-Statewide,4
+2026,Q4,October,10,10/1/2026,NORTHEAST,New England,VT,Vermont-Statewide,4
+2026,Q4,November,11,11/1/2026,NORTHEAST,New England,VT,Vermont-Statewide,4
+2026,Q4,December,12,12/1/2026,NORTHEAST,New England,VT,Vermont-Statewide,4
+2026,Q1,January,1,1/1/2026,NORTHEAST,New England,NH,New Hampshire-Statewide,4
+2026,Q1,February,2,2/1/2026,NORTHEAST,New England,NH,New Hampshire-Statewide,4
+2026,Q1,March,3,3/1/2026,NORTHEAST,New England,NH,New Hampshire-Statewide,4
+2026,Q2,April,4,4/1/2026,NORTHEAST,New England,NH,New Hampshire-Statewide,4
+2026,Q2,May,5,5/1/2026,NORTHEAST,New England,NH,New Hampshire-Statewide,4
+2026,Q2,June,6,6/1/2026,NORTHEAST,New England,NH,New Hampshire-Statewide,4
+2026,Q3,July,7,7/1/2026,NORTHEAST,New England,NH,New Hampshire-Statewide,4
+2026,Q3,August,8,8/1/2026,NORTHEAST,New England,NH,New Hampshire-Statewide,4
+2026,Q3,September,9,9/1/2026,NORTHEAST,New England,NH,New Hampshire-Statewide,4
+2026,Q4,October,10,10/1/2026,NORTHEAST,New England,NH,New Hampshire-Statewide,4
+2026,Q4,November,11,11/1/2026,NORTHEAST,New England,NH,New Hampshire-Statewide,4
+2026,Q4,December,12,12/1/2026,NORTHEAST,New England,NH,New Hampshire-Statewide,4
+2026,Q1,January,1,1/1/2026,NORTHEAST,New England,MA,Boston Office,4
+2026,Q1,February,2,2/1/2026,NORTHEAST,New England,MA,Boston Office,4
+2026,Q1,March,3,3/1/2026,NORTHEAST,New England,MA,Boston Office,4
+2026,Q2,April,4,4/1/2026,NORTHEAST,New England,MA,Boston Office,4
+2026,Q2,May,5,5/1/2026,NORTHEAST,New England,MA,Boston Office,4
+2026,Q2,June,6,6/1/2026,NORTHEAST,New England,MA,Boston Office,4
+2026,Q3,July,7,7/1/2026,NORTHEAST,New England,MA,Boston Office,4
+2026,Q3,August,8,8/1/2026,NORTHEAST,New England,MA,Boston Office,4
+2026,Q3,September,9,9/1/2026,NORTHEAST,New England,MA,Boston Office,4
+2026,Q4,October,10,10/1/2026,NORTHEAST,New England,MA,Boston Office,4
+2026,Q4,November,11,11/1/2026,NORTHEAST,New England,MA,Boston Office,4
+2026,Q4,December,12,12/1/2026,NORTHEAST,New England,MA,Boston Office,4
+2026,Q1,January,1,1/1/2026,NORTHEAST,Northeast Other,CT,Connecticut-Statewide,4
+2026,Q1,February,2,2/1/2026,NORTHEAST,Northeast Other,CT,Connecticut-Statewide,4
+2026,Q1,March,3,3/1/2026,NORTHEAST,Northeast Other,CT,Connecticut-Statewide,4
+2026,Q2,April,4,4/1/2026,NORTHEAST,Northeast Other,CT,Connecticut-Statewide,4
+2026,Q2,May,5,5/1/2026,NORTHEAST,Northeast Other,CT,Connecticut-Statewide,4
+2026,Q2,June,6,6/1/2026,NORTHEAST,Northeast Other,CT,Connecticut-Statewide,4
+2026,Q3,July,7,7/1/2026,NORTHEAST,Northeast Other,CT,Connecticut-Statewide,4
+2026,Q3,August,8,8/1/2026,NORTHEAST,Northeast Other,CT,Connecticut-Statewide,4
+2026,Q3,September,9,9/1/2026,NORTHEAST,Northeast Other,CT,Connecticut-Statewide,4
+2026,Q4,October,10,10/1/2026,NORTHEAST,Northeast Other,CT,Connecticut-Statewide,4
+2026,Q4,November,11,11/1/2026,NORTHEAST,Northeast Other,CT,Connecticut-Statewide,4
+2026,Q4,December,12,12/1/2026,NORTHEAST,Northeast Other,CT,Connecticut-Statewide,4
+2026,Q1,January,1,1/1/2026,NORTHEAST,New England,RI,Rhode Island-Statewide,4
+2026,Q1,February,2,2/1/2026,NORTHEAST,New England,RI,Rhode Island-Statewide,4
+2026,Q1,March,3,3/1/2026,NORTHEAST,New England,RI,Rhode Island-Statewide,4
+2026,Q2,April,4,4/1/2026,NORTHEAST,New England,RI,Rhode Island-Statewide,4
+2026,Q2,May,5,5/1/2026,NORTHEAST,New England,RI,Rhode Island-Statewide,4
+2026,Q2,June,6,6/1/2026,NORTHEAST,New England,RI,Rhode Island-Statewide,4
+2026,Q3,July,7,7/1/2026,NORTHEAST,New England,RI,Rhode Island-Statewide,4
+2026,Q3,August,8,8/1/2026,NORTHEAST,New England,RI,Rhode Island-Statewide,4
+2026,Q3,September,9,9/1/2026,NORTHEAST,New England,RI,Rhode Island-Statewide,4
+2026,Q4,October,10,10/1/2026,NORTHEAST,New England,RI,Rhode Island-Statewide,4
+2026,Q4,November,11,11/1/2026,NORTHEAST,New England,RI,Rhode Island-Statewide,4
+2026,Q4,December,12,12/1/2026,NORTHEAST,New England,RI,Rhode Island-Statewide,4
+2026,Q1,January,1,1/1/2026,NORTHEAST,Northeast Other,NY,New York Office,4
+2026,Q1,February,2,2/1/2026,NORTHEAST,Northeast Other,NY,New York Office,4
+2026,Q1,March,3,3/1/2026,NORTHEAST,Northeast Other,NY,New York Office,4
+2026,Q2,April,4,4/1/2026,NORTHEAST,Northeast Other,NY,New York Office,4
+2026,Q2,May,5,5/1/2026,NORTHEAST,Northeast Other,NY,New York Office,4
+2026,Q2,June,6,6/1/2026,NORTHEAST,Northeast Other,NY,New York Office,4
+2026,Q3,July,7,7/1/2026,NORTHEAST,Northeast Other,NY,New York Office,4
+2026,Q3,August,8,8/1/2026,NORTHEAST,Northeast Other,NY,New York Office,4
+2026,Q3,September,9,9/1/2026,NORTHEAST,Northeast Other,NY,New York Office,4
+2026,Q4,October,10,10/1/2026,NORTHEAST,Northeast Other,NY,New York Office,4
+2026,Q4,November,11,11/1/2026,NORTHEAST,Northeast Other,NY,New York Office,4
+2026,Q4,December,12,12/1/2026,NORTHEAST,Northeast Other,NY,New York Office,4
+2026,Q1,January,1,1/1/2026,NORTHEAST,Northeast Other,NJ,New Jersey Office,4
+2026,Q1,February,2,2/1/2026,NORTHEAST,Northeast Other,NJ,New Jersey Office,4
+2026,Q1,March,3,3/1/2026,NORTHEAST,Northeast Other,NJ,New Jersey Office,4
+2026,Q2,April,4,4/1/2026,NORTHEAST,Northeast Other,NJ,New Jersey Office,4
+2026,Q2,May,5,5/1/2026,NORTHEAST,Northeast Other,NJ,New Jersey Office,4
+2026,Q2,June,6,6/1/2026,NORTHEAST,Northeast Other,NJ,New Jersey Office,4
+2026,Q3,July,7,7/1/2026,NORTHEAST,Northeast Other,NJ,New Jersey Office,4
+2026,Q3,August,8,8/1/2026,NORTHEAST,Northeast Other,NJ,New Jersey Office,4
+2026,Q3,September,9,9/1/2026,NORTHEAST,Northeast Other,NJ,New Jersey Office,4
+2026,Q4,October,10,10/1/2026,NORTHEAST,Northeast Other,NJ,New Jersey Office,4
+2026,Q4,November,11,11/1/2026,NORTHEAST,Northeast Other,NJ,New Jersey Office,4
+2026,Q4,December,12,12/1/2026,NORTHEAST,Northeast Other,NJ,New Jersey Office,4
+2026,Q1,January,1,1/1/2026,NORTHEAST,Northeast Other,DE,Delaware-Statewide,4
+2026,Q1,February,2,2/1/2026,NORTHEAST,Northeast Other,DE,Delaware-Statewide,4
+2026,Q1,March,3,3/1/2026,NORTHEAST,Northeast Other,DE,Delaware-Statewide,4
+2026,Q2,April,4,4/1/2026,NORTHEAST,Northeast Other,DE,Delaware-Statewide,4
+2026,Q2,May,5,5/1/2026,NORTHEAST,Northeast Other,DE,Delaware-Statewide,4
+2026,Q2,June,6,6/1/2026,NORTHEAST,Northeast Other,DE,Delaware-Statewide,4
+2026,Q3,July,7,7/1/2026,NORTHEAST,Northeast Other,DE,Delaware-Statewide,4
+2026,Q3,August,8,8/1/2026,NORTHEAST,Northeast Other,DE,Delaware-Statewide,4
+2026,Q3,September,9,9/1/2026,NORTHEAST,Northeast Other,DE,Delaware-Statewide,4
+2026,Q4,October,10,10/1/2026,NORTHEAST,Northeast Other,DE,Delaware-Statewide,4
+2026,Q4,November,11,11/1/2026,NORTHEAST,Northeast Other,DE,Delaware-Statewide,4
+2026,Q4,December,12,12/1/2026,NORTHEAST,Northeast Other,DE,Delaware-Statewide,4
+2026,Q1,January,1,1/1/2026,NORTHEAST,Northeast Other,PA,Philadelphia Office,4
+2026,Q1,February,2,2/1/2026,NORTHEAST,Northeast Other,PA,Philadelphia Office,4
+2026,Q1,March,3,3/1/2026,NORTHEAST,Northeast Other,PA,Philadelphia Office,4
+2026,Q2,April,4,4/1/2026,NORTHEAST,Northeast Other,PA,Philadelphia Office,4
+2026,Q2,May,5,5/1/2026,NORTHEAST,Northeast Other,PA,Philadelphia Office,4
+2026,Q2,June,6,6/1/2026,NORTHEAST,Northeast Other,PA,Philadelphia Office,4
+2026,Q3,July,7,7/1/2026,NORTHEAST,Northeast Other,PA,Philadelphia Office,4
+2026,Q3,August,8,8/1/2026,NORTHEAST,Northeast Other,PA,Philadelphia Office,4
+2026,Q3,September,9,9/1/2026,NORTHEAST,Northeast Other,PA,Philadelphia Office,4
+2026,Q4,October,10,10/1/2026,NORTHEAST,Northeast Other,PA,Philadelphia Office,4
+2026,Q4,November,11,11/1/2026,NORTHEAST,Northeast Other,PA,Philadelphia Office,4
+2026,Q4,December,12,12/1/2026,NORTHEAST,Northeast Other,PA,Philadelphia Office,4
+2026,Q1,January,1,1/1/2026,DMV,DMV Other,MD,Baltimore Office,1
+2026,Q1,February,2,2/1/2026,DMV,DMV Other,MD,Baltimore Office,1
+2026,Q1,March,3,3/1/2026,DMV,DMV Other,MD,Baltimore Office,1
+2026,Q2,April,4,4/1/2026,DMV,DMV Other,MD,Baltimore Office,1
+2026,Q2,May,5,5/1/2026,DMV,DMV Other,MD,Baltimore Office,1
+2026,Q2,June,6,6/1/2026,DMV,DMV Other,MD,Baltimore Office,1
+2026,Q3,July,7,7/1/2026,DMV,DMV Other,MD,Baltimore Office,1
+2026,Q3,August,8,8/1/2026,DMV,DMV Other,MD,Baltimore Office,1
+2026,Q3,September,9,9/1/2026,DMV,DMV Other,MD,Baltimore Office,1
+2026,Q4,October,10,10/1/2026,DMV,DMV Other,MD,Baltimore Office,1
+2026,Q4,November,11,11/1/2026,DMV,DMV Other,MD,Baltimore Office,1
+2026,Q4,December,12,12/1/2026,DMV,DMV Other,MD,Baltimore Office,1
+2026,Q1,January,1,1/1/2026,DMV,DMV Other,DC,District of Columbia,1
+2026,Q1,February,2,2/1/2026,DMV,DMV Other,DC,District of Columbia,1
+2026,Q1,March,3,3/1/2026,DMV,DMV Other,DC,District of Columbia,1
+2026,Q2,April,4,4/1/2026,DMV,DMV Other,DC,District of Columbia,1
+2026,Q2,May,5,5/1/2026,DMV,DMV Other,DC,District of Columbia,1
+2026,Q2,June,6,6/1/2026,DMV,DMV Other,DC,District of Columbia,1
+2026,Q3,July,7,7/1/2026,DMV,DMV Other,DC,District of Columbia,1
+2026,Q3,August,8,8/1/2026,DMV,DMV Other,DC,District of Columbia,1
+2026,Q3,September,9,9/1/2026,DMV,DMV Other,DC,District of Columbia,1
+2026,Q4,October,10,10/1/2026,DMV,DMV Other,DC,District of Columbia,1
+2026,Q4,November,11,11/1/2026,DMV,DMV Other,DC,District of Columbia,1
+2026,Q4,December,12,12/1/2026,DMV,DMV Other,DC,District of Columbia,1
+2026,Q1,January,1,1/1/2026,DMV,DMV Other,WV,West Virginia-Statewide,1
+2026,Q1,February,2,2/1/2026,DMV,DMV Other,WV,West Virginia-Statewide,1
+2026,Q1,March,3,3/1/2026,DMV,DMV Other,WV,West Virginia-Statewide,1
+2026,Q2,April,4,4/1/2026,DMV,DMV Other,WV,West Virginia-Statewide,1
+2026,Q2,May,5,5/1/2026,DMV,DMV Other,WV,West Virginia-Statewide,1
+2026,Q2,June,6,6/1/2026,DMV,DMV Other,WV,West Virginia-Statewide,1
+2026,Q3,July,7,7/1/2026,DMV,DMV Other,WV,West Virginia-Statewide,1
+2026,Q3,August,8,8/1/2026,DMV,DMV Other,WV,West Virginia-Statewide,1
+2026,Q3,September,9,9/1/2026,DMV,DMV Other,WV,West Virginia-Statewide,1
+2026,Q4,October,10,10/1/2026,DMV,DMV Other,WV,West Virginia-Statewide,1
+2026,Q4,November,11,11/1/2026,DMV,DMV Other,WV,West Virginia-Statewide,1
+2026,Q4,December,12,12/1/2026,DMV,DMV Other,WV,West Virginia-Statewide,1
+2026,Q1,January,1,1/1/2026,MIDWEST 1,Midwest 1,IL,Chicago Office,2
+2026,Q1,February,2,2/1/2026,MIDWEST 1,Midwest 1,IL,Chicago Office,2
+2026,Q1,March,3,3/1/2026,MIDWEST 1,Midwest 1,IL,Chicago Office,2
+2026,Q2,April,4,4/1/2026,MIDWEST 1,Midwest 1,IL,Chicago Office,2
+2026,Q2,May,5,5/1/2026,MIDWEST 1,Midwest 1,IL,Chicago Office,2
+2026,Q2,June,6,6/1/2026,MIDWEST 1,Midwest 1,IL,Chicago Office,2
+2026,Q3,July,7,7/1/2026,MIDWEST 1,Midwest 1,IL,Chicago Office,2
+2026,Q3,August,8,8/1/2026,MIDWEST 1,Midwest 1,IL,Chicago Office,2
+2026,Q3,September,9,9/1/2026,MIDWEST 1,Midwest 1,IL,Chicago Office,2
+2026,Q4,October,10,10/1/2026,MIDWEST 1,Midwest 1,IL,Chicago Office,2
+2026,Q4,November,11,11/1/2026,MIDWEST 1,Midwest 1,IL,Chicago Office,2
+2026,Q4,December,12,12/1/2026,MIDWEST 1,Midwest 1,IL,Chicago Office,2
+2026,Q1,January,1,1/1/2026,MIDWEST 1,Midwest 1,MI,Detroit Office,2
+2026,Q1,February,2,2/1/2026,MIDWEST 1,Midwest 1,MI,Detroit Office,2
+2026,Q1,March,3,3/1/2026,MIDWEST 1,Midwest 1,MI,Detroit Office,2
+2026,Q2,April,4,4/1/2026,MIDWEST 1,Midwest 1,MI,Detroit Office,2
+2026,Q2,May,5,5/1/2026,MIDWEST 1,Midwest 1,MI,Detroit Office,2
+2026,Q2,June,6,6/1/2026,MIDWEST 1,Midwest 1,MI,Detroit Office,2
+2026,Q3,July,7,7/1/2026,MIDWEST 1,Midwest 1,MI,Detroit Office,2
+2026,Q3,August,8,8/1/2026,MIDWEST 1,Midwest 1,MI,Detroit Office,2
+2026,Q3,September,9,9/1/2026,MIDWEST 1,Midwest 1,MI,Detroit Office,2
+2026,Q4,October,10,10/1/2026,MIDWEST 1,Midwest 1,MI,Detroit Office,2
+2026,Q4,November,11,11/1/2026,MIDWEST 1,Midwest 1,MI,Detroit Office,2
+2026,Q4,December,12,12/1/2026,MIDWEST 1,Midwest 1,MI,Detroit Office,2
+2026,Q1,January,1,1/1/2026,MIDWEST 2,Midwest 2,ND,North Dakota-Statewide,3
+2026,Q1,February,2,2/1/2026,MIDWEST 2,Midwest 2,ND,North Dakota-Statewide,3
+2026,Q1,March,3,3/1/2026,MIDWEST 2,Midwest 2,ND,North Dakota-Statewide,3
+2026,Q2,April,4,4/1/2026,MIDWEST 2,Midwest 2,ND,North Dakota-Statewide,3
+2026,Q2,May,5,5/1/2026,MIDWEST 2,Midwest 2,ND,North Dakota-Statewide,3
+2026,Q2,June,6,6/1/2026,MIDWEST 2,Midwest 2,ND,North Dakota-Statewide,3
+2026,Q3,July,7,7/1/2026,MIDWEST 2,Midwest 2,ND,North Dakota-Statewide,3
+2026,Q3,August,8,8/1/2026,MIDWEST 2,Midwest 2,ND,North Dakota-Statewide,3
+2026,Q3,September,9,9/1/2026,MIDWEST 2,Midwest 2,ND,North Dakota-Statewide,3
+2026,Q4,October,10,10/1/2026,MIDWEST 2,Midwest 2,ND,North Dakota-Statewide,3
+2026,Q4,November,11,11/1/2026,MIDWEST 2,Midwest 2,ND,North Dakota-Statewide,3
+2026,Q4,December,12,12/1/2026,MIDWEST 2,Midwest 2,ND,North Dakota-Statewide,3
+2026,Q1,January,1,1/1/2026,MIDWEST 2,Midwest 2,SD,South Dakota-Statewide,3
+2026,Q1,February,2,2/1/2026,MIDWEST 2,Midwest 2,SD,South Dakota-Statewide,3
+2026,Q1,March,3,3/1/2026,MIDWEST 2,Midwest 2,SD,South Dakota-Statewide,3
+2026,Q2,April,4,4/1/2026,MIDWEST 2,Midwest 2,SD,South Dakota-Statewide,3
+2026,Q2,May,5,5/1/2026,MIDWEST 2,Midwest 2,SD,South Dakota-Statewide,3
+2026,Q2,June,6,6/1/2026,MIDWEST 2,Midwest 2,SD,South Dakota-Statewide,3
+2026,Q3,July,7,7/1/2026,MIDWEST 2,Midwest 2,SD,South Dakota-Statewide,3
+2026,Q3,August,8,8/1/2026,MIDWEST 2,Midwest 2,SD,South Dakota-Statewide,3
+2026,Q3,September,9,9/1/2026,MIDWEST 2,Midwest 2,SD,South Dakota-Statewide,3
+2026,Q4,October,10,10/1/2026,MIDWEST 2,Midwest 2,SD,South Dakota-Statewide,3
+2026,Q4,November,11,11/1/2026,MIDWEST 2,Midwest 2,SD,South Dakota-Statewide,3
+2026,Q4,December,12,12/1/2026,MIDWEST 2,Midwest 2,SD,South Dakota-Statewide,3
+2026,Q1,January,1,1/1/2026,MIDWEST 2,Midwest 2,NE,Nebraska-Statewide,3
+2026,Q1,February,2,2/1/2026,MIDWEST 2,Midwest 2,NE,Nebraska-Statewide,3
+2026,Q1,March,3,3/1/2026,MIDWEST 2,Midwest 2,NE,Nebraska-Statewide,3
+2026,Q2,April,4,4/1/2026,MIDWEST 2,Midwest 2,NE,Nebraska-Statewide,3
+2026,Q2,May,5,5/1/2026,MIDWEST 2,Midwest 2,NE,Nebraska-Statewide,3
+2026,Q2,June,6,6/1/2026,MIDWEST 2,Midwest 2,NE,Nebraska-Statewide,3
+2026,Q3,July,7,7/1/2026,MIDWEST 2,Midwest 2,NE,Nebraska-Statewide,3
+2026,Q3,August,8,8/1/2026,MIDWEST 2,Midwest 2,NE,Nebraska-Statewide,3
+2026,Q3,September,9,9/1/2026,MIDWEST 2,Midwest 2,NE,Nebraska-Statewide,3
+2026,Q4,October,10,10/1/2026,MIDWEST 2,Midwest 2,NE,Nebraska-Statewide,3
+2026,Q4,November,11,11/1/2026,MIDWEST 2,Midwest 2,NE,Nebraska-Statewide,3
+2026,Q4,December,12,12/1/2026,MIDWEST 2,Midwest 2,NE,Nebraska-Statewide,3
+2026,Q1,January,1,1/1/2026,MIDWEST 2,Midwest 2,MN,Minneapolis Office,3
+2026,Q1,February,2,2/1/2026,MIDWEST 2,Midwest 2,MN,Minneapolis Office,3
+2026,Q1,March,3,3/1/2026,MIDWEST 2,Midwest 2,MN,Minneapolis Office,3
+2026,Q2,April,4,4/1/2026,MIDWEST 2,Midwest 2,MN,Minneapolis Office,3
+2026,Q2,May,5,5/1/2026,MIDWEST 2,Midwest 2,MN,Minneapolis Office,3
+2026,Q2,June,6,6/1/2026,MIDWEST 2,Midwest 2,MN,Minneapolis Office,3
+2026,Q3,July,7,7/1/2026,MIDWEST 2,Midwest 2,MN,Minneapolis Office,3
+2026,Q3,August,8,8/1/2026,MIDWEST 2,Midwest 2,MN,Minneapolis Office,3
+2026,Q3,September,9,9/1/2026,MIDWEST 2,Midwest 2,MN,Minneapolis Office,3
+2026,Q4,October,10,10/1/2026,MIDWEST 2,Midwest 2,MN,Minneapolis Office,3
+2026,Q4,November,11,11/1/2026,MIDWEST 2,Midwest 2,MN,Minneapolis Office,3
+2026,Q4,December,12,12/1/2026,MIDWEST 2,Midwest 2,MN,Minneapolis Office,3
+2026,Q1,January,1,1/1/2026,MIDWEST 2,Midwest 2,IA,Cedar Rapids Office,3
+2026,Q1,February,2,2/1/2026,MIDWEST 2,Midwest 2,IA,Cedar Rapids Office,3
+2026,Q1,March,3,3/1/2026,MIDWEST 2,Midwest 2,IA,Cedar Rapids Office,3
+2026,Q2,April,4,4/1/2026,MIDWEST 2,Midwest 2,IA,Cedar Rapids Office,3
+2026,Q2,May,5,5/1/2026,MIDWEST 2,Midwest 2,IA,Cedar Rapids Office,3
+2026,Q2,June,6,6/1/2026,MIDWEST 2,Midwest 2,IA,Cedar Rapids Office,3
+2026,Q3,July,7,7/1/2026,MIDWEST 2,Midwest 2,IA,Cedar Rapids Office,3
+2026,Q3,August,8,8/1/2026,MIDWEST 2,Midwest 2,IA,Cedar Rapids Office,3
+2026,Q3,September,9,9/1/2026,MIDWEST 2,Midwest 2,IA,Cedar Rapids Office,3
+2026,Q4,October,10,10/1/2026,MIDWEST 2,Midwest 2,IA,Cedar Rapids Office,3
+2026,Q4,November,11,11/1/2026,MIDWEST 2,Midwest 2,IA,Cedar Rapids Office,3
+2026,Q4,December,12,12/1/2026,MIDWEST 2,Midwest 2,IA,Cedar Rapids Office,3
+2026,Q1,January,1,1/1/2026,MIDWEST 2,Midwest 2,WI,Wisconsin-Statewide,3
+2026,Q1,February,2,2/1/2026,MIDWEST 2,Midwest 2,WI,Wisconsin-Statewide,3
+2026,Q1,March,3,3/1/2026,MIDWEST 2,Midwest 2,WI,Wisconsin-Statewide,3
+2026,Q2,April,4,4/1/2026,MIDWEST 2,Midwest 2,WI,Wisconsin-Statewide,3
+2026,Q2,May,5,5/1/2026,MIDWEST 2,Midwest 2,WI,Wisconsin-Statewide,3
+2026,Q2,June,6,6/1/2026,MIDWEST 2,Midwest 2,WI,Wisconsin-Statewide,3
+2026,Q3,July,7,7/1/2026,MIDWEST 2,Midwest 2,WI,Wisconsin-Statewide,3
+2026,Q3,August,8,8/1/2026,MIDWEST 2,Midwest 2,WI,Wisconsin-Statewide,3
+2026,Q3,September,9,9/1/2026,MIDWEST 2,Midwest 2,WI,Wisconsin-Statewide,3
+2026,Q4,October,10,10/1/2026,MIDWEST 2,Midwest 2,WI,Wisconsin-Statewide,3
+2026,Q4,November,11,11/1/2026,MIDWEST 2,Midwest 2,WI,Wisconsin-Statewide,3
+2026,Q4,December,12,12/1/2026,MIDWEST 2,Midwest 2,WI,Wisconsin-Statewide,3
+2026,Q1,January,1,1/1/2026,MIDWEST 2,Midwest 2,IN,Indianapolis Office,3
+2026,Q1,February,2,2/1/2026,MIDWEST 2,Midwest 2,IN,Indianapolis Office,3
+2026,Q1,March,3,3/1/2026,MIDWEST 2,Midwest 2,IN,Indianapolis Office,3
+2026,Q2,April,4,4/1/2026,MIDWEST 2,Midwest 2,IN,Indianapolis Office,3
+2026,Q2,May,5,5/1/2026,MIDWEST 2,Midwest 2,IN,Indianapolis Office,3
+2026,Q2,June,6,6/1/2026,MIDWEST 2,Midwest 2,IN,Indianapolis Office,3
+2026,Q3,July,7,7/1/2026,MIDWEST 2,Midwest 2,IN,Indianapolis Office,3
+2026,Q3,August,8,8/1/2026,MIDWEST 2,Midwest 2,IN,Indianapolis Office,3
+2026,Q3,September,9,9/1/2026,MIDWEST 2,Midwest 2,IN,Indianapolis Office,3
+2026,Q4,October,10,10/1/2026,MIDWEST 2,Midwest 2,IN,Indianapolis Office,3
+2026,Q4,November,11,11/1/2026,MIDWEST 2,Midwest 2,IN,Indianapolis Office,3
+2026,Q4,December,12,12/1/2026,MIDWEST 2,Midwest 2,IN,Indianapolis Office,3
+2026,Q1,January,1,1/1/2026,MIDWEST 2,Midwest 2,OH,Ohio-Statewide,3
+2026,Q1,February,2,2/1/2026,MIDWEST 2,Midwest 2,OH,Ohio-Statewide,3
+2026,Q1,March,3,3/1/2026,MIDWEST 2,Midwest 2,OH,Ohio-Statewide,3
+2026,Q2,April,4,4/1/2026,MIDWEST 2,Midwest 2,OH,Ohio-Statewide,3
+2026,Q2,May,5,5/1/2026,MIDWEST 2,Midwest 2,OH,Ohio-Statewide,3
+2026,Q2,June,6,6/1/2026,MIDWEST 2,Midwest 2,OH,Ohio-Statewide,3
+2026,Q3,July,7,7/1/2026,MIDWEST 2,Midwest 2,OH,Ohio-Statewide,3
+2026,Q3,August,8,8/1/2026,MIDWEST 2,Midwest 2,OH,Ohio-Statewide,3
+2026,Q3,September,9,9/1/2026,MIDWEST 2,Midwest 2,OH,Ohio-Statewide,3
+2026,Q4,October,10,10/1/2026,MIDWEST 2,Midwest 2,OH,Ohio-Statewide,3
+2026,Q4,November,11,11/1/2026,MIDWEST 2,Midwest 2,OH,Ohio-Statewide,3
+2026,Q4,December,12,12/1/2026,MIDWEST 2,Midwest 2,OH,Ohio-Statewide,3
+2026,Q1,January,1,1/1/2026,MIDWEST 2,Midwest 2,KY,Kentucky-Statewide,3
+2026,Q1,February,2,2/1/2026,MIDWEST 2,Midwest 2,KY,Kentucky-Statewide,3
+2026,Q1,March,3,3/1/2026,MIDWEST 2,Midwest 2,KY,Kentucky-Statewide,3
+2026,Q2,April,4,4/1/2026,MIDWEST 2,Midwest 2,KY,Kentucky-Statewide,3
+2026,Q2,May,5,5/1/2026,MIDWEST 2,Midwest 2,KY,Kentucky-Statewide,3
+2026,Q2,June,6,6/1/2026,MIDWEST 2,Midwest 2,KY,Kentucky-Statewide,3
+2026,Q3,July,7,7/1/2026,MIDWEST 2,Midwest 2,KY,Kentucky-Statewide,3
+2026,Q3,August,8,8/1/2026,MIDWEST 2,Midwest 2,KY,Kentucky-Statewide,3
+2026,Q3,September,9,9/1/2026,MIDWEST 2,Midwest 2,KY,Kentucky-Statewide,3
+2026,Q4,October,10,10/1/2026,MIDWEST 2,Midwest 2,KY,Kentucky-Statewide,3
+2026,Q4,November,11,11/1/2026,MIDWEST 2,Midwest 2,KY,Kentucky-Statewide,3
+2026,Q4,December,12,12/1/2026,MIDWEST 2,Midwest 2,KY,Kentucky-Statewide,3
+2026,Q1,January,1,1/1/2026,SOUTHEAST,Southeast Other,TN,Memphis Office,6
+2026,Q1,February,2,2/1/2026,SOUTHEAST,Southeast Other,TN,Memphis Office,6
+2026,Q1,March,3,3/1/2026,SOUTHEAST,Southeast Other,TN,Memphis Office,6
+2026,Q2,April,4,4/1/2026,SOUTHEAST,Southeast Other,TN,Memphis Office,6
+2026,Q2,May,5,5/1/2026,SOUTHEAST,Southeast Other,TN,Memphis Office,6
+2026,Q2,June,6,6/1/2026,SOUTHEAST,Southeast Other,TN,Memphis Office,6
+2026,Q3,July,7,7/1/2026,SOUTHEAST,Southeast Other,TN,Memphis Office,6
+2026,Q3,August,8,8/1/2026,SOUTHEAST,Southeast Other,TN,Memphis Office,6
+2026,Q3,September,9,9/1/2026,SOUTHEAST,Southeast Other,TN,Memphis Office,6
+2026,Q4,October,10,10/1/2026,SOUTHEAST,Southeast Other,TN,Memphis Office,6
+2026,Q4,November,11,11/1/2026,SOUTHEAST,Southeast Other,TN,Memphis Office,6
+2026,Q4,December,12,12/1/2026,SOUTHEAST,Southeast Other,TN,Memphis Office,6
+2026,Q1,January,1,1/1/2026,SOUTHEAST,Southeast Other,NC,Durham Office,6
+2026,Q1,February,2,2/1/2026,SOUTHEAST,Southeast Other,NC,Durham Office,6
+2026,Q1,March,3,3/1/2026,SOUTHEAST,Southeast Other,NC,Durham Office,6
+2026,Q2,April,4,4/1/2026,SOUTHEAST,Southeast Other,NC,Durham Office,6
+2026,Q2,May,5,5/1/2026,SOUTHEAST,Southeast Other,NC,Durham Office,6
+2026,Q2,June,6,6/1/2026,SOUTHEAST,Southeast Other,NC,Durham Office,6
+2026,Q3,July,7,7/1/2026,SOUTHEAST,Southeast Other,NC,Durham Office,6
+2026,Q3,August,8,8/1/2026,SOUTHEAST,Southeast Other,NC,Durham Office,6
+2026,Q3,September,9,9/1/2026,SOUTHEAST,Southeast Other,NC,Durham Office,6
+2026,Q4,October,10,10/1/2026,SOUTHEAST,Southeast Other,NC,Durham Office,6
+2026,Q4,November,11,11/1/2026,SOUTHEAST,Southeast Other,NC,Durham Office,6
+2026,Q4,December,12,12/1/2026,SOUTHEAST,Southeast Other,NC,Durham Office,6
+2026,Q1,January,1,1/1/2026,SOUTHEAST,Southeast Other,SC,Charleston Office,6
+2026,Q1,February,2,2/1/2026,SOUTHEAST,Southeast Other,SC,Charleston Office,6
+2026,Q1,March,3,3/1/2026,SOUTHEAST,Southeast Other,SC,Charleston Office,6
+2026,Q2,April,4,4/1/2026,SOUTHEAST,Southeast Other,SC,Charleston Office,6
+2026,Q2,May,5,5/1/2026,SOUTHEAST,Southeast Other,SC,Charleston Office,6
+2026,Q2,June,6,6/1/2026,SOUTHEAST,Southeast Other,SC,Charleston Office,6
+2026,Q3,July,7,7/1/2026,SOUTHEAST,Southeast Other,SC,Charleston Office,6
+2026,Q3,August,8,8/1/2026,SOUTHEAST,Southeast Other,SC,Charleston Office,6
+2026,Q3,September,9,9/1/2026,SOUTHEAST,Southeast Other,SC,Charleston Office,6
+2026,Q4,October,10,10/1/2026,SOUTHEAST,Southeast Other,SC,Charleston Office,6
+2026,Q4,November,11,11/1/2026,SOUTHEAST,Southeast Other,SC,Charleston Office,6
+2026,Q4,December,12,12/1/2026,SOUTHEAST,Southeast Other,SC,Charleston Office,6
+2026,Q1,January,1,1/1/2026,SOUTHEAST,Southeast Other,GA,Atlanta Office,6
+2026,Q1,February,2,2/1/2026,SOUTHEAST,Southeast Other,GA,Atlanta Office,6
+2026,Q1,March,3,3/1/2026,SOUTHEAST,Southeast Other,GA,Atlanta Office,6
+2026,Q2,April,4,4/1/2026,SOUTHEAST,Southeast Other,GA,Atlanta Office,6
+2026,Q2,May,5,5/1/2026,SOUTHEAST,Southeast Other,GA,Atlanta Office,6
+2026,Q2,June,6,6/1/2026,SOUTHEAST,Southeast Other,GA,Atlanta Office,6
+2026,Q3,July,7,7/1/2026,SOUTHEAST,Southeast Other,GA,Atlanta Office,6
+2026,Q3,August,8,8/1/2026,SOUTHEAST,Southeast Other,GA,Atlanta Office,6
+2026,Q3,September,9,9/1/2026,SOUTHEAST,Southeast Other,GA,Atlanta Office,6
+2026,Q4,October,10,10/1/2026,SOUTHEAST,Southeast Other,GA,Atlanta Office,6
+2026,Q4,November,11,11/1/2026,SOUTHEAST,Southeast Other,GA,Atlanta Office,6
+2026,Q4,December,12,12/1/2026,SOUTHEAST,Southeast Other,GA,Atlanta Office,6
+2026,Q1,January,1,1/1/2026,SOUTHEAST,Southeast Other,AL,Alabama-Statewide,6
+2026,Q1,February,2,2/1/2026,SOUTHEAST,Southeast Other,AL,Alabama-Statewide,6
+2026,Q1,March,3,3/1/2026,SOUTHEAST,Southeast Other,AL,Alabama-Statewide,6
+2026,Q2,April,4,4/1/2026,SOUTHEAST,Southeast Other,AL,Alabama-Statewide,6
+2026,Q2,May,5,5/1/2026,SOUTHEAST,Southeast Other,AL,Alabama-Statewide,6
+2026,Q2,June,6,6/1/2026,SOUTHEAST,Southeast Other,AL,Alabama-Statewide,6
+2026,Q3,July,7,7/1/2026,SOUTHEAST,Southeast Other,AL,Alabama-Statewide,6
+2026,Q3,August,8,8/1/2026,SOUTHEAST,Southeast Other,AL,Alabama-Statewide,6
+2026,Q3,September,9,9/1/2026,SOUTHEAST,Southeast Other,AL,Alabama-Statewide,6
+2026,Q4,October,10,10/1/2026,SOUTHEAST,Southeast Other,AL,Alabama-Statewide,6
+2026,Q4,November,11,11/1/2026,SOUTHEAST,Southeast Other,AL,Alabama-Statewide,6
+2026,Q4,December,12,12/1/2026,SOUTHEAST,Southeast Other,AL,Alabama-Statewide,6
+2026,Q1,January,1,1/1/2026,SOUTHEAST,Southeast Other,MS,Mississippi-Statewide,6
+2026,Q1,February,2,2/1/2026,SOUTHEAST,Southeast Other,MS,Mississippi-Statewide,6
+2026,Q1,March,3,3/1/2026,SOUTHEAST,Southeast Other,MS,Mississippi-Statewide,6
+2026,Q2,April,4,4/1/2026,SOUTHEAST,Southeast Other,MS,Mississippi-Statewide,6
+2026,Q2,May,5,5/1/2026,SOUTHEAST,Southeast Other,MS,Mississippi-Statewide,6
+2026,Q2,June,6,6/1/2026,SOUTHEAST,Southeast Other,MS,Mississippi-Statewide,6
+2026,Q3,July,7,7/1/2026,SOUTHEAST,Southeast Other,MS,Mississippi-Statewide,6
+2026,Q3,August,8,8/1/2026,SOUTHEAST,Southeast Other,MS,Mississippi-Statewide,6
+2026,Q3,September,9,9/1/2026,SOUTHEAST,Southeast Other,MS,Mississippi-Statewide,6
+2026,Q4,October,10,10/1/2026,SOUTHEAST,Southeast Other,MS,Mississippi-Statewide,6
+2026,Q4,November,11,11/1/2026,SOUTHEAST,Southeast Other,MS,Mississippi-Statewide,6
+2026,Q4,December,12,12/1/2026,SOUTHEAST,Southeast Other,MS,Mississippi-Statewide,6
+2026,Q1,January,1,1/1/2026,SOUTHEAST,Southeast Other,LA,New Orleans Office,6
+2026,Q1,February,2,2/1/2026,SOUTHEAST,Southeast Other,LA,New Orleans Office,6
+2026,Q1,March,3,3/1/2026,SOUTHEAST,Southeast Other,LA,New Orleans Office,6
+2026,Q2,April,4,4/1/2026,SOUTHEAST,Southeast Other,LA,New Orleans Office,6
+2026,Q2,May,5,5/1/2026,SOUTHEAST,Southeast Other,LA,New Orleans Office,6
+2026,Q2,June,6,6/1/2026,SOUTHEAST,Southeast Other,LA,New Orleans Office,6
+2026,Q3,July,7,7/1/2026,SOUTHEAST,Southeast Other,LA,New Orleans Office,6
+2026,Q3,August,8,8/1/2026,SOUTHEAST,Southeast Other,LA,New Orleans Office,6
+2026,Q3,September,9,9/1/2026,SOUTHEAST,Southeast Other,LA,New Orleans Office,6
+2026,Q4,October,10,10/1/2026,SOUTHEAST,Southeast Other,LA,New Orleans Office,6
+2026,Q4,November,11,11/1/2026,SOUTHEAST,Southeast Other,LA,New Orleans Office,6
+2026,Q4,December,12,12/1/2026,SOUTHEAST,Southeast Other,LA,New Orleans Office,6
+2026,Q1,January,1,1/1/2026,SOUTH CENTRAL,South Central Other,AR,Arkansas-Statewide,5
+2026,Q1,February,2,2/1/2026,SOUTH CENTRAL,South Central Other,AR,Arkansas-Statewide,5
+2026,Q1,March,3,3/1/2026,SOUTH CENTRAL,South Central Other,AR,Arkansas-Statewide,5
+2026,Q2,April,4,4/1/2026,SOUTH CENTRAL,South Central Other,AR,Arkansas-Statewide,5
+2026,Q2,May,5,5/1/2026,SOUTH CENTRAL,South Central Other,AR,Arkansas-Statewide,5
+2026,Q2,June,6,6/1/2026,SOUTH CENTRAL,South Central Other,AR,Arkansas-Statewide,5
+2026,Q3,July,7,7/1/2026,SOUTH CENTRAL,South Central Other,AR,Arkansas-Statewide,5
+2026,Q3,August,8,8/1/2026,SOUTH CENTRAL,South Central Other,AR,Arkansas-Statewide,5
+2026,Q3,September,9,9/1/2026,SOUTH CENTRAL,South Central Other,AR,Arkansas-Statewide,5
+2026,Q4,October,10,10/1/2026,SOUTH CENTRAL,South Central Other,AR,Arkansas-Statewide,5
+2026,Q4,November,11,11/1/2026,SOUTH CENTRAL,South Central Other,AR,Arkansas-Statewide,5
+2026,Q4,December,12,12/1/2026,SOUTH CENTRAL,South Central Other,AR,Arkansas-Statewide,5
+2026,Q1,January,1,1/1/2026,SOUTH CENTRAL,South Central Other,NM,New Mexico-Statewide,5
+2026,Q1,February,2,2/1/2026,SOUTH CENTRAL,South Central Other,NM,New Mexico-Statewide,5
+2026,Q1,March,3,3/1/2026,SOUTH CENTRAL,South Central Other,NM,New Mexico-Statewide,5
+2026,Q2,April,4,4/1/2026,SOUTH CENTRAL,South Central Other,NM,New Mexico-Statewide,5
+2026,Q2,May,5,5/1/2026,SOUTH CENTRAL,South Central Other,NM,New Mexico-Statewide,5
+2026,Q2,June,6,6/1/2026,SOUTH CENTRAL,South Central Other,NM,New Mexico-Statewide,5
+2026,Q3,July,7,7/1/2026,SOUTH CENTRAL,South Central Other,NM,New Mexico-Statewide,5
+2026,Q3,August,8,8/1/2026,SOUTH CENTRAL,South Central Other,NM,New Mexico-Statewide,5
+2026,Q3,September,9,9/1/2026,SOUTH CENTRAL,South Central Other,NM,New Mexico-Statewide,5
+2026,Q4,October,10,10/1/2026,SOUTH CENTRAL,South Central Other,NM,New Mexico-Statewide,5
+2026,Q4,November,11,11/1/2026,SOUTH CENTRAL,South Central Other,NM,New Mexico-Statewide,5
+2026,Q4,December,12,12/1/2026,SOUTH CENTRAL,South Central Other,NM,New Mexico-Statewide,5
+2026,Q1,January,1,1/1/2026,SOUTH CENTRAL,South Central Other,OK,Oklahoma City Office,5
+2026,Q1,February,2,2/1/2026,SOUTH CENTRAL,South Central Other,OK,Oklahoma City Office,5
+2026,Q1,March,3,3/1/2026,SOUTH CENTRAL,South Central Other,OK,Oklahoma City Office,5
+2026,Q2,April,4,4/1/2026,SOUTH CENTRAL,South Central Other,OK,Oklahoma City Office,5
+2026,Q2,May,5,5/1/2026,SOUTH CENTRAL,South Central Other,OK,Oklahoma City Office,5
+2026,Q2,June,6,6/1/2026,SOUTH CENTRAL,South Central Other,OK,Oklahoma City Office,5
+2026,Q3,July,7,7/1/2026,SOUTH CENTRAL,South Central Other,OK,Oklahoma City Office,5
+2026,Q3,August,8,8/1/2026,SOUTH CENTRAL,South Central Other,OK,Oklahoma City Office,5
+2026,Q3,September,9,9/1/2026,SOUTH CENTRAL,South Central Other,OK,Oklahoma City Office,5
+2026,Q4,October,10,10/1/2026,SOUTH CENTRAL,South Central Other,OK,Oklahoma City Office,5
+2026,Q4,November,11,11/1/2026,SOUTH CENTRAL,South Central Other,OK,Oklahoma City Office,5
+2026,Q4,December,12,12/1/2026,SOUTH CENTRAL,South Central Other,OK,Oklahoma City Office,5
+2026,Q1,January,1,1/1/2026,SOUTH CENTRAL,South Central Other,KS,Kansas City Office,5
+2026,Q1,February,2,2/1/2026,SOUTH CENTRAL,South Central Other,KS,Kansas City Office,5
+2026,Q1,March,3,3/1/2026,SOUTH CENTRAL,South Central Other,KS,Kansas City Office,5
+2026,Q2,April,4,4/1/2026,SOUTH CENTRAL,South Central Other,KS,Kansas City Office,5
+2026,Q2,May,5,5/1/2026,SOUTH CENTRAL,South Central Other,KS,Kansas City Office,5
+2026,Q2,June,6,6/1/2026,SOUTH CENTRAL,South Central Other,KS,Kansas City Office,5
+2026,Q3,July,7,7/1/2026,SOUTH CENTRAL,South Central Other,KS,Kansas City Office,5
+2026,Q3,August,8,8/1/2026,SOUTH CENTRAL,South Central Other,KS,Kansas City Office,5
+2026,Q3,September,9,9/1/2026,SOUTH CENTRAL,South Central Other,KS,Kansas City Office,5
+2026,Q4,October,10,10/1/2026,SOUTH CENTRAL,South Central Other,KS,Kansas City Office,5
+2026,Q4,November,11,11/1/2026,SOUTH CENTRAL,South Central Other,KS,Kansas City Office,5
+2026,Q4,December,12,12/1/2026,SOUTH CENTRAL,South Central Other,KS,Kansas City Office,5
+2026,Q1,January,1,1/1/2026,WEST,West Other,WA,Seattle Office,7
+2026,Q1,February,2,2/1/2026,WEST,West Other,WA,Seattle Office,7
+2026,Q1,March,3,3/1/2026,WEST,West Other,WA,Seattle Office,7
+2026,Q2,April,4,4/1/2026,WEST,West Other,WA,Seattle Office,7
+2026,Q2,May,5,5/1/2026,WEST,West Other,WA,Seattle Office,7
+2026,Q2,June,6,6/1/2026,WEST,West Other,WA,Seattle Office,7
+2026,Q3,July,7,7/1/2026,WEST,West Other,WA,Seattle Office,7
+2026,Q3,August,8,8/1/2026,WEST,West Other,WA,Seattle Office,7
+2026,Q3,September,9,9/1/2026,WEST,West Other,WA,Seattle Office,7
+2026,Q4,October,10,10/1/2026,WEST,West Other,WA,Seattle Office,7
+2026,Q4,November,11,11/1/2026,WEST,West Other,WA,Seattle Office,7
+2026,Q4,December,12,12/1/2026,WEST,West Other,WA,Seattle Office,7
+2026,Q1,January,1,1/1/2026,WEST,West Other,OR,Oregon-Statewide,7
+2026,Q1,February,2,2/1/2026,WEST,West Other,OR,Oregon-Statewide,7
+2026,Q1,March,3,3/1/2026,WEST,West Other,OR,Oregon-Statewide,7
+2026,Q2,April,4,4/1/2026,WEST,West Other,OR,Oregon-Statewide,7
+2026,Q2,May,5,5/1/2026,WEST,West Other,OR,Oregon-Statewide,7
+2026,Q2,June,6,6/1/2026,WEST,West Other,OR,Oregon-Statewide,7
+2026,Q3,July,7,7/1/2026,WEST,West Other,OR,Oregon-Statewide,7
+2026,Q3,August,8,8/1/2026,WEST,West Other,OR,Oregon-Statewide,7
+2026,Q3,September,9,9/1/2026,WEST,West Other,OR,Oregon-Statewide,7
+2026,Q4,October,10,10/1/2026,WEST,West Other,OR,Oregon-Statewide,7
+2026,Q4,November,11,11/1/2026,WEST,West Other,OR,Oregon-Statewide,7
+2026,Q4,December,12,12/1/2026,WEST,West Other,OR,Oregon-Statewide,7
+2026,Q1,January,1,1/1/2026,WEST,West Other,ID,Idaho-Statewide,7
+2026,Q1,February,2,2/1/2026,WEST,West Other,ID,Idaho-Statewide,7
+2026,Q1,March,3,3/1/2026,WEST,West Other,ID,Idaho-Statewide,7
+2026,Q2,April,4,4/1/2026,WEST,West Other,ID,Idaho-Statewide,7
+2026,Q2,May,5,5/1/2026,WEST,West Other,ID,Idaho-Statewide,7
+2026,Q2,June,6,6/1/2026,WEST,West Other,ID,Idaho-Statewide,7
+2026,Q3,July,7,7/1/2026,WEST,West Other,ID,Idaho-Statewide,7
+2026,Q3,August,8,8/1/2026,WEST,West Other,ID,Idaho-Statewide,7
+2026,Q3,September,9,9/1/2026,WEST,West Other,ID,Idaho-Statewide,7
+2026,Q4,October,10,10/1/2026,WEST,West Other,ID,Idaho-Statewide,7
+2026,Q4,November,11,11/1/2026,WEST,West Other,ID,Idaho-Statewide,7
+2026,Q4,December,12,12/1/2026,WEST,West Other,ID,Idaho-Statewide,7
+2026,Q1,January,1,1/1/2026,WEST,West Other,MT,Montana-Statewide,7
+2026,Q1,February,2,2/1/2026,WEST,West Other,MT,Montana-Statewide,7
+2026,Q1,March,3,3/1/2026,WEST,West Other,MT,Montana-Statewide,7
+2026,Q2,April,4,4/1/2026,WEST,West Other,MT,Montana-Statewide,7
+2026,Q2,May,5,5/1/2026,WEST,West Other,MT,Montana-Statewide,7
+2026,Q2,June,6,6/1/2026,WEST,West Other,MT,Montana-Statewide,7
+2026,Q3,July,7,7/1/2026,WEST,West Other,MT,Montana-Statewide,7
+2026,Q3,August,8,8/1/2026,WEST,West Other,MT,Montana-Statewide,7
+2026,Q3,September,9,9/1/2026,WEST,West Other,MT,Montana-Statewide,7
+2026,Q4,October,10,10/1/2026,WEST,West Other,MT,Montana-Statewide,7
+2026,Q4,November,11,11/1/2026,WEST,West Other,MT,Montana-Statewide,7
+2026,Q4,December,12,12/1/2026,WEST,West Other,MT,Montana-Statewide,7
+2026,Q1,January,1,1/1/2026,WEST,West Other,WY,Wyoming-Statewide,7
+2026,Q1,February,2,2/1/2026,WEST,West Other,WY,Wyoming-Statewide,7
+2026,Q1,March,3,3/1/2026,WEST,West Other,WY,Wyoming-Statewide,7
+2026,Q2,April,4,4/1/2026,WEST,West Other,WY,Wyoming-Statewide,7
+2026,Q2,May,5,5/1/2026,WEST,West Other,WY,Wyoming-Statewide,7
+2026,Q2,June,6,6/1/2026,WEST,West Other,WY,Wyoming-Statewide,7
+2026,Q3,July,7,7/1/2026,WEST,West Other,WY,Wyoming-Statewide,7
+2026,Q3,August,8,8/1/2026,WEST,West Other,WY,Wyoming-Statewide,7
+2026,Q3,September,9,9/1/2026,WEST,West Other,WY,Wyoming-Statewide,7
+2026,Q4,October,10,10/1/2026,WEST,West Other,WY,Wyoming-Statewide,7
+2026,Q4,November,11,11/1/2026,WEST,West Other,WY,Wyoming-Statewide,7
+2026,Q4,December,12,12/1/2026,WEST,West Other,WY,Wyoming-Statewide,7
+2026,Q1,January,1,1/1/2026,WEST,West Other,CO,Denver Office,7
+2026,Q1,February,2,2/1/2026,WEST,West Other,CO,Denver Office,7
+2026,Q1,March,3,3/1/2026,WEST,West Other,CO,Denver Office,7
+2026,Q2,April,4,4/1/2026,WEST,West Other,CO,Denver Office,7
+2026,Q2,May,5,5/1/2026,WEST,West Other,CO,Denver Office,7
+2026,Q2,June,6,6/1/2026,WEST,West Other,CO,Denver Office,7
+2026,Q3,July,7,7/1/2026,WEST,West Other,CO,Denver Office,7
+2026,Q3,August,8,8/1/2026,WEST,West Other,CO,Denver Office,7
+2026,Q3,September,9,9/1/2026,WEST,West Other,CO,Denver Office,7
+2026,Q4,October,10,10/1/2026,WEST,West Other,CO,Denver Office,7
+2026,Q4,November,11,11/1/2026,WEST,West Other,CO,Denver Office,7
+2026,Q4,December,12,12/1/2026,WEST,West Other,CO,Denver Office,7
+2026,Q1,January,1,1/1/2026,WEST,West Other,NV,Nevada-Statewide,7
+2026,Q1,February,2,2/1/2026,WEST,West Other,NV,Nevada-Statewide,7
+2026,Q1,March,3,3/1/2026,WEST,West Other,NV,Nevada-Statewide,7
+2026,Q2,April,4,4/1/2026,WEST,West Other,NV,Nevada-Statewide,7
+2026,Q2,May,5,5/1/2026,WEST,West Other,NV,Nevada-Statewide,7
+2026,Q2,June,6,6/1/2026,WEST,West Other,NV,Nevada-Statewide,7
+2026,Q3,July,7,7/1/2026,WEST,West Other,NV,Nevada-Statewide,7
+2026,Q3,August,8,8/1/2026,WEST,West Other,NV,Nevada-Statewide,7
+2026,Q3,September,9,9/1/2026,WEST,West Other,NV,Nevada-Statewide,7
+2026,Q4,October,10,10/1/2026,WEST,West Other,NV,Nevada-Statewide,7
+2026,Q4,November,11,11/1/2026,WEST,West Other,NV,Nevada-Statewide,7
+2026,Q4,December,12,12/1/2026,WEST,West Other,NV,Nevada-Statewide,7
+2026,Q1,January,1,1/1/2026,WEST,West Other,UT,Utah-Statewide,7
+2026,Q1,February,2,2/1/2026,WEST,West Other,UT,Utah-Statewide,7
+2026,Q1,March,3,3/1/2026,WEST,West Other,UT,Utah-Statewide,7
+2026,Q2,April,4,4/1/2026,WEST,West Other,UT,Utah-Statewide,7
+2026,Q2,May,5,5/1/2026,WEST,West Other,UT,Utah-Statewide,7
+2026,Q2,June,6,6/1/2026,WEST,West Other,UT,Utah-Statewide,7
+2026,Q3,July,7,7/1/2026,WEST,West Other,UT,Utah-Statewide,7
+2026,Q3,August,8,8/1/2026,WEST,West Other,UT,Utah-Statewide,7
+2026,Q3,September,9,9/1/2026,WEST,West Other,UT,Utah-Statewide,7
+2026,Q4,October,10,10/1/2026,WEST,West Other,UT,Utah-Statewide,7
+2026,Q4,November,11,11/1/2026,WEST,West Other,UT,Utah-Statewide,7
+2026,Q4,December,12,12/1/2026,WEST,West Other,UT,Utah-Statewide,7
+2026,Q1,January,1,1/1/2026,WEST,West Other,AZ,Phoenix Office,7
+2026,Q1,February,2,2/1/2026,WEST,West Other,AZ,Phoenix Office,7
+2026,Q1,March,3,3/1/2026,WEST,West Other,AZ,Phoenix Office,7
+2026,Q2,April,4,4/1/2026,WEST,West Other,AZ,Phoenix Office,7
+2026,Q2,May,5,5/1/2026,WEST,West Other,AZ,Phoenix Office,7
+2026,Q2,June,6,6/1/2026,WEST,West Other,AZ,Phoenix Office,7
+2026,Q3,July,7,7/1/2026,WEST,West Other,AZ,Phoenix Office,7
+2026,Q3,August,8,8/1/2026,WEST,West Other,AZ,Phoenix Office,7
+2026,Q3,September,9,9/1/2026,WEST,West Other,AZ,Phoenix Office,7
+2026,Q4,October,10,10/1/2026,WEST,West Other,AZ,Phoenix Office,7
+2026,Q4,November,11,11/1/2026,WEST,West Other,AZ,Phoenix Office,7
+2026,Q4,December,12,12/1/2026,WEST,West Other,AZ,Phoenix Office,7
+2026,Q1,January,1,1/1/2026,WEST,West Other,AK,Alaska-Statewide,7
+2026,Q1,February,2,2/1/2026,WEST,West Other,AK,Alaska-Statewide,7
+2026,Q1,March,3,3/1/2026,WEST,West Other,AK,Alaska-Statewide,7
+2026,Q2,April,4,4/1/2026,WEST,West Other,AK,Alaska-Statewide,7
+2026,Q2,May,5,5/1/2026,WEST,West Other,AK,Alaska-Statewide,7
+2026,Q2,June,6,6/1/2026,WEST,West Other,AK,Alaska-Statewide,7
+2026,Q3,July,7,7/1/2026,WEST,West Other,AK,Alaska-Statewide,7
+2026,Q3,August,8,8/1/2026,WEST,West Other,AK,Alaska-Statewide,7
+2026,Q3,September,9,9/1/2026,WEST,West Other,AK,Alaska-Statewide,7
+2026,Q4,October,10,10/1/2026,WEST,West Other,AK,Alaska-Statewide,7
+2026,Q4,November,11,11/1/2026,WEST,West Other,AK,Alaska-Statewide,7
+2026,Q4,December,12,12/1/2026,WEST,West Other,AK,Alaska-Statewide,7
+2026,Q1,January,1,1/1/2026,WEST,West Other,HI,Hawaii-Statewide,7
+2026,Q1,February,2,2/1/2026,WEST,West Other,HI,Hawaii-Statewide,7
+2026,Q1,March,3,3/1/2026,WEST,West Other,HI,Hawaii-Statewide,7
+2026,Q2,April,4,4/1/2026,WEST,West Other,HI,Hawaii-Statewide,7
+2026,Q2,May,5,5/1/2026,WEST,West Other,HI,Hawaii-Statewide,7
+2026,Q2,June,6,6/1/2026,WEST,West Other,HI,Hawaii-Statewide,7
+2026,Q3,July,7,7/1/2026,WEST,West Other,HI,Hawaii-Statewide,7
+2026,Q3,August,8,8/1/2026,WEST,West Other,HI,Hawaii-Statewide,7
+2026,Q3,September,9,9/1/2026,WEST,West Other,HI,Hawaii-Statewide,7
+2026,Q4,October,10,10/1/2026,WEST,West Other,HI,Hawaii-Statewide,7
+2026,Q4,November,11,11/1/2026,WEST,West Other,HI,Hawaii-Statewide,7
+2026,Q4,December,12,12/1/2026,WEST,West Other,HI,Hawaii-Statewide,7
+2026,Q1,January,1,1/1/2026,UNASSIGNED,National,HQ,Unassigned,8
+2026,Q1,February,2,2/1/2026,UNASSIGNED,National,HQ,Unassigned,8
+2026,Q1,March,3,3/1/2026,UNASSIGNED,National,HQ,Unassigned,8
+2026,Q2,April,4,4/1/2026,UNASSIGNED,National,HQ,Unassigned,8
+2026,Q2,May,5,5/1/2026,UNASSIGNED,National,HQ,Unassigned,8
+2026,Q2,June,6,6/1/2026,UNASSIGNED,National,HQ,Unassigned,8
+2026,Q3,July,7,7/1/2026,UNASSIGNED,National,HQ,Unassigned,8
+2026,Q3,August,8,8/1/2026,UNASSIGNED,National,HQ,Unassigned,8
+2026,Q3,September,9,9/1/2026,UNASSIGNED,National,HQ,Unassigned,8
+2026,Q4,October,10,10/1/2026,UNASSIGNED,National,HQ,Unassigned,8
+2026,Q4,November,11,11/1/2026,UNASSIGNED,National,HQ,Unassigned,8
+2026,Q4,December,12,12/1/2026,UNASSIGNED,National,HQ,Unassigned,8
+2026,Q1,January,1,1/1/2026,SOUTH CENTRAL,Texas,TX,Houston Office,5
+2026,Q1,February,2,2/1/2026,SOUTH CENTRAL,Texas,TX,Houston Office,5
+2026,Q1,March,3,3/1/2026,SOUTH CENTRAL,Texas,TX,Houston Office,5
+2026,Q2,April,4,4/1/2026,SOUTH CENTRAL,Texas,TX,Houston Office,5
+2026,Q2,May,5,5/1/2026,SOUTH CENTRAL,Texas,TX,Houston Office,5
+2026,Q2,June,6,6/1/2026,SOUTH CENTRAL,Texas,TX,Houston Office,5
+2026,Q3,July,7,7/1/2026,SOUTH CENTRAL,Texas,TX,Houston Office,5
+2026,Q3,August,8,8/1/2026,SOUTH CENTRAL,Texas,TX,Houston Office,5
+2026,Q3,September,9,9/1/2026,SOUTH CENTRAL,Texas,TX,Houston Office,5
+2026,Q4,October,10,10/1/2026,SOUTH CENTRAL,Texas,TX,Houston Office,5
+2026,Q4,November,11,11/1/2026,SOUTH CENTRAL,Texas,TX,Houston Office,5
+2026,Q4,December,12,12/1/2026,SOUTH CENTRAL,Texas,TX,Houston Office,5
+2026,Q1,January,1,1/1/2026,SOUTH CENTRAL,Texas,TX,Dallas Office,5
+2026,Q1,February,2,2/1/2026,SOUTH CENTRAL,Texas,TX,Dallas Office,5
+2026,Q1,March,3,3/1/2026,SOUTH CENTRAL,Texas,TX,Dallas Office,5
+2026,Q2,April,4,4/1/2026,SOUTH CENTRAL,Texas,TX,Dallas Office,5
+2026,Q2,May,5,5/1/2026,SOUTH CENTRAL,Texas,TX,Dallas Office,5
+2026,Q2,June,6,6/1/2026,SOUTH CENTRAL,Texas,TX,Dallas Office,5
+2026,Q3,July,7,7/1/2026,SOUTH CENTRAL,Texas,TX,Dallas Office,5
+2026,Q3,August,8,8/1/2026,SOUTH CENTRAL,Texas,TX,Dallas Office,5
+2026,Q3,September,9,9/1/2026,SOUTH CENTRAL,Texas,TX,Dallas Office,5
+2026,Q4,October,10,10/1/2026,SOUTH CENTRAL,Texas,TX,Dallas Office,5
+2026,Q4,November,11,11/1/2026,SOUTH CENTRAL,Texas,TX,Dallas Office,5
+2026,Q4,December,12,12/1/2026,SOUTH CENTRAL,Texas,TX,Dallas Office,5
+2026,Q1,January,1,1/1/2026,SOUTH CENTRAL,Texas,TX,Austin Office,5
+2026,Q1,February,2,2/1/2026,SOUTH CENTRAL,Texas,TX,Austin Office,5
+2026,Q1,March,3,3/1/2026,SOUTH CENTRAL,Texas,TX,Austin Office,5
+2026,Q2,April,4,4/1/2026,SOUTH CENTRAL,Texas,TX,Austin Office,5
+2026,Q2,May,5,5/1/2026,SOUTH CENTRAL,Texas,TX,Austin Office,5
+2026,Q2,June,6,6/1/2026,SOUTH CENTRAL,Texas,TX,Austin Office,5
+2026,Q3,July,7,7/1/2026,SOUTH CENTRAL,Texas,TX,Austin Office,5
+2026,Q3,August,8,8/1/2026,SOUTH CENTRAL,Texas,TX,Austin Office,5
+2026,Q3,September,9,9/1/2026,SOUTH CENTRAL,Texas,TX,Austin Office,5
+2026,Q4,October,10,10/1/2026,SOUTH CENTRAL,Texas,TX,Austin Office,5
+2026,Q4,November,11,11/1/2026,SOUTH CENTRAL,Texas,TX,Austin Office,5
+2026,Q4,December,12,12/1/2026,SOUTH CENTRAL,Texas,TX,Austin Office,5
+2026,Q1,January,1,1/1/2026,WEST,California,CA,Los Angeles Office,7
+2026,Q1,February,2,2/1/2026,WEST,California,CA,Los Angeles Office,7
+2026,Q1,March,3,3/1/2026,WEST,California,CA,Los Angeles Office,7
+2026,Q2,April,4,4/1/2026,WEST,California,CA,Los Angeles Office,7
+2026,Q2,May,5,5/1/2026,WEST,California,CA,Los Angeles Office,7
+2026,Q2,June,6,6/1/2026,WEST,California,CA,Los Angeles Office,7
+2026,Q3,July,7,7/1/2026,WEST,California,CA,Los Angeles Office,7
+2026,Q3,August,8,8/1/2026,WEST,California,CA,Los Angeles Office,7
+2026,Q3,September,9,9/1/2026,WEST,California,CA,Los Angeles Office,7
+2026,Q4,October,10,10/1/2026,WEST,California,CA,Los Angeles Office,7
+2026,Q4,November,11,11/1/2026,WEST,California,CA,Los Angeles Office,7
+2026,Q4,December,12,12/1/2026,WEST,California,CA,Los Angeles Office,7
+2026,Q1,January,1,1/1/2026,WEST,California,CA,San Diego Office,7
+2026,Q1,February,2,2/1/2026,WEST,California,CA,San Diego Office,7
+2026,Q1,March,3,3/1/2026,WEST,California,CA,San Diego Office,7
+2026,Q2,April,4,4/1/2026,WEST,California,CA,San Diego Office,7
+2026,Q2,May,5,5/1/2026,WEST,California,CA,San Diego Office,7
+2026,Q2,June,6,6/1/2026,WEST,California,CA,San Diego Office,7
+2026,Q3,July,7,7/1/2026,WEST,California,CA,San Diego Office,7
+2026,Q3,August,8,8/1/2026,WEST,California,CA,San Diego Office,7
+2026,Q3,September,9,9/1/2026,WEST,California,CA,San Diego Office,7
+2026,Q4,October,10,10/1/2026,WEST,California,CA,San Diego Office,7
+2026,Q4,November,11,11/1/2026,WEST,California,CA,San Diego Office,7
+2026,Q4,December,12,12/1/2026,WEST,California,CA,San Diego Office,7
+2026,Q1,January,1,1/1/2026,WEST,California,CA,Bay Area Office,7
+2026,Q1,February,2,2/1/2026,WEST,California,CA,Bay Area Office,7
+2026,Q1,March,3,3/1/2026,WEST,California,CA,Bay Area Office,7
+2026,Q2,April,4,4/1/2026,WEST,California,CA,Bay Area Office,7
+2026,Q2,May,5,5/1/2026,WEST,California,CA,Bay Area Office,7
+2026,Q2,June,6,6/1/2026,WEST,California,CA,Bay Area Office,7
+2026,Q3,July,7,7/1/2026,WEST,California,CA,Bay Area Office,7
+2026,Q3,August,8,8/1/2026,WEST,California,CA,Bay Area Office,7
+2026,Q3,September,9,9/1/2026,WEST,California,CA,Bay Area Office,7
+2026,Q4,October,10,10/1/2026,WEST,California,CA,Bay Area Office,7
+2026,Q4,November,11,11/1/2026,WEST,California,CA,Bay Area Office,7
+2026,Q4,December,12,12/1/2026,WEST,California,CA,Bay Area Office,7
+2026,Q1,January,1,1/1/2026,WEST,California,CA,Sacramento Office,7
+2026,Q1,February,2,2/1/2026,WEST,California,CA,Sacramento Office,7
+2026,Q1,March,3,3/1/2026,WEST,California,CA,Sacramento Office,7
+2026,Q2,April,4,4/1/2026,WEST,California,CA,Sacramento Office,7
+2026,Q2,May,5,5/1/2026,WEST,California,CA,Sacramento Office,7
+2026,Q2,June,6,6/1/2026,WEST,California,CA,Sacramento Office,7
+2026,Q3,July,7,7/1/2026,WEST,California,CA,Sacramento Office,7
+2026,Q3,August,8,8/1/2026,WEST,California,CA,Sacramento Office,7
+2026,Q3,September,9,9/1/2026,WEST,California,CA,Sacramento Office,7
+2026,Q4,October,10,10/1/2026,WEST,California,CA,Sacramento Office,7
+2026,Q4,November,11,11/1/2026,WEST,California,CA,Sacramento Office,7
+2026,Q4,December,12,12/1/2026,WEST,California,CA,Sacramento Office,7
+2026,Q1,January,1,1/1/2026,DMV,DMV Other,VA,Alexandria Office,1
+2026,Q1,February,2,2/1/2026,DMV,DMV Other,VA,Alexandria Office,1
+2026,Q1,March,3,3/1/2026,DMV,DMV Other,VA,Alexandria Office,1
+2026,Q2,April,4,4/1/2026,DMV,DMV Other,VA,Alexandria Office,1
+2026,Q2,May,5,5/1/2026,DMV,DMV Other,VA,Alexandria Office,1
+2026,Q2,June,6,6/1/2026,DMV,DMV Other,VA,Alexandria Office,1
+2026,Q3,July,7,7/1/2026,DMV,DMV Other,VA,Alexandria Office,1
+2026,Q3,August,8,8/1/2026,DMV,DMV Other,VA,Alexandria Office,1
+2026,Q3,September,9,9/1/2026,DMV,DMV Other,VA,Alexandria Office,1
+2026,Q4,October,10,10/1/2026,DMV,DMV Other,VA,Alexandria Office,1
+2026,Q4,November,11,11/1/2026,DMV,DMV Other,VA,Alexandria Office,1
+2026,Q4,December,12,12/1/2026,DMV,DMV Other,VA,Alexandria Office,1
+2026,Q1,January,1,1/1/2026,DMV,Virginia,VA,Richmond Office,1
+2026,Q1,February,2,2/1/2026,DMV,Virginia,VA,Richmond Office,1
+2026,Q1,March,3,3/1/2026,DMV,Virginia,VA,Richmond Office,1
+2026,Q2,April,4,4/1/2026,DMV,Virginia,VA,Richmond Office,1
+2026,Q2,May,5,5/1/2026,DMV,Virginia,VA,Richmond Office,1
+2026,Q2,June,6,6/1/2026,DMV,Virginia,VA,Richmond Office,1
+2026,Q3,July,7,7/1/2026,DMV,Virginia,VA,Richmond Office,1
+2026,Q3,August,8,8/1/2026,DMV,Virginia,VA,Richmond Office,1
+2026,Q3,September,9,9/1/2026,DMV,Virginia,VA,Richmond Office,1
+2026,Q4,October,10,10/1/2026,DMV,Virginia,VA,Richmond Office,1
+2026,Q4,November,11,11/1/2026,DMV,Virginia,VA,Richmond Office,1
+2026,Q4,December,12,12/1/2026,DMV,Virginia,VA,Richmond Office,1
+2026,Q1,January,1,1/1/2026,SOUTHEAST,Southeast Other,FL,Miami Office,6
+2026,Q1,February,2,2/1/2026,SOUTHEAST,Southeast Other,FL,Miami Office,6
+2026,Q1,March,3,3/1/2026,SOUTHEAST,Southeast Other,FL,Miami Office,6
+2026,Q2,April,4,4/1/2026,SOUTHEAST,Southeast Other,FL,Miami Office,6
+2026,Q2,May,5,5/1/2026,SOUTHEAST,Southeast Other,FL,Miami Office,6
+2026,Q2,June,6,6/1/2026,SOUTHEAST,Southeast Other,FL,Miami Office,6
+2026,Q3,July,7,7/1/2026,SOUTHEAST,Southeast Other,FL,Miami Office,6
+2026,Q3,August,8,8/1/2026,SOUTHEAST,Southeast Other,FL,Miami Office,6
+2026,Q3,September,9,9/1/2026,SOUTHEAST,Southeast Other,FL,Miami Office,6
+2026,Q4,October,10,10/1/2026,SOUTHEAST,Southeast Other,FL,Miami Office,6
+2026,Q4,November,11,11/1/2026,SOUTHEAST,Southeast Other,FL,Miami Office,6
+2026,Q4,December,12,12/1/2026,SOUTHEAST,Southeast Other,FL,Miami Office,6
+2026,Q1,January,1,1/1/2026,SOUTHEAST,Florida,FL,Tampa Office,6
+2026,Q1,February,2,2/1/2026,SOUTHEAST,Florida,FL,Tampa Office,6
+2026,Q1,March,3,3/1/2026,SOUTHEAST,Florida,FL,Tampa Office,6
+2026,Q2,April,4,4/1/2026,SOUTHEAST,Florida,FL,Tampa Office,6
+2026,Q2,May,5,5/1/2026,SOUTHEAST,Florida,FL,Tampa Office,6
+2026,Q2,June,6,6/1/2026,SOUTHEAST,Florida,FL,Tampa Office,6
+2026,Q3,July,7,7/1/2026,SOUTHEAST,Florida,FL,Tampa Office,6
+2026,Q3,August,8,8/1/2026,SOUTHEAST,Florida,FL,Tampa Office,6
+2026,Q3,September,9,9/1/2026,SOUTHEAST,Florida,FL,Tampa Office,6
+2026,Q4,October,10,10/1/2026,SOUTHEAST,Florida,FL,Tampa Office,6
+2026,Q4,November,11,11/1/2026,SOUTHEAST,Florida,FL,Tampa Office,6
+2026,Q4,December,12,12/1/2026,SOUTHEAST,Florida,FL,Tampa Office,6
+2026,Q1,January,1,1/1/2026,SOUTHEAST,Florida,FL,Orlando Office,6
+2026,Q1,February,2,2/1/2026,SOUTHEAST,Florida,FL,Orlando Office,6
+2026,Q1,March,3,3/1/2026,SOUTHEAST,Florida,FL,Orlando Office,6
+2026,Q2,April,4,4/1/2026,SOUTHEAST,Florida,FL,Orlando Office,6
+2026,Q2,May,5,5/1/2026,SOUTHEAST,Florida,FL,Orlando Office,6
+2026,Q2,June,6,6/1/2026,SOUTHEAST,Florida,FL,Orlando Office,6
+2026,Q3,July,7,7/1/2026,SOUTHEAST,Florida,FL,Orlando Office,6
+2026,Q3,August,8,8/1/2026,SOUTHEAST,Florida,FL,Orlando Office,6
+2026,Q3,September,9,9/1/2026,SOUTHEAST,Florida,FL,Orlando Office,6
+2026,Q4,October,10,10/1/2026,SOUTHEAST,Florida,FL,Orlando Office,6
+2026,Q4,November,11,11/1/2026,SOUTHEAST,Florida,FL,Orlando Office,6
+2026,Q4,December,12,12/1/2026,SOUTHEAST,Florida,FL,Orlando Office,6
+2026,Q1,January,1,1/1/2026,MIDWEST 2,Midwest 2,MO,St. Louis Office,3
+2026,Q1,February,2,2/1/2026,MIDWEST 2,Midwest 2,MO,St. Louis Office,3
+2026,Q1,March,3,3/1/2026,MIDWEST 2,Midwest 2,MO,St. Louis Office,3
+2026,Q2,April,4,4/1/2026,MIDWEST 2,Midwest 2,MO,St. Louis Office,3
+2026,Q2,May,5,5/1/2026,MIDWEST 2,Midwest 2,MO,St. Louis Office,3
+2026,Q2,June,6,6/1/2026,MIDWEST 2,Midwest 2,MO,St. Louis Office,3
+2026,Q3,July,7,7/1/2026,MIDWEST 2,Midwest 2,MO,St. Louis Office,3
+2026,Q3,August,8,8/1/2026,MIDWEST 2,Midwest 2,MO,St. Louis Office,3
+2026,Q3,September,9,9/1/2026,MIDWEST 2,Midwest 2,MO,St. Louis Office,3
+2026,Q4,October,10,10/1/2026,MIDWEST 2,Midwest 2,MO,St. Louis Office,3
+2026,Q4,November,11,11/1/2026,MIDWEST 2,Midwest 2,MO,St. Louis Office,3
+2026,Q4,December,12,12/1/2026,MIDWEST 2,Midwest 2,MO,St. Louis Office,3
