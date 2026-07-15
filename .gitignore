@@ -1,0 +1,6 @@
+.env
+env.env.txt
+uploads/
+outputs/
+__pycache__/
+*.pyc

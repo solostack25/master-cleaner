@@ -3,7 +3,6 @@ import shutil
 from pathlib import Path
 from uuid import uuid4
 from urllib.parse import urlencode
-import pandas as pd
 
 from fastapi import FastAPI, UploadFile, File, Form, Request, BackgroundTasks
 from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
@@ -17,6 +16,7 @@ from expenditure_cleaner import clean_expenditure
 from revenue_cleaner import clean_multiple_revenue_imports
 from current_revenue import clean_multiple_current_revenue_imports
 from hunger_prevention import clean_multiple_hunger_prevention_imports
+from refugee_services import clean_multiple_refugee_services_imports
 
 
 app = FastAPI()
@@ -132,7 +132,8 @@ ALLOWED_REPORT_TYPES = {
     "hunger_prevention",
     "expenditure",
     "in_kind_donations",
-    "current_revenue"
+    "current_revenue",
+    "refugee_services"
 }
 
 
@@ -245,6 +246,7 @@ def cleaner_page_html() -> str:
                     <option value="current_revenue">Current Revenue</option>
                     <option value="expenditure">Expenditure</option>
                     <option value="hunger_prevention">Hunger Prevention</option>
+                    <option value="refugee_services">Refugee Services</option>
                     <option value="in_kind_donations">In-Kind Donations</option>
                     <option value="irfas">IRFAS</option>
                     <option value="revenue">Revenue</option>
@@ -397,6 +399,87 @@ def cleaner_page_html() -> str:
                         </p>
                     </div>
                     
+                    <div id="instructions_refugee_services" class="cleaner-instructions" style="display: none;">
+                        <p>
+                            <strong>Special Instructions for Refugee Services Uploads:</strong>
+                            <br><br>
+                            Before you upload, here are special instructions for each file before you export:
+                            <br><br>
+                            1. Case Management:
+                            <br>
+                            Make sure the columns include the following:
+                            <br><br>
+                            <strong>Delivery Date</strong>
+                            <br>
+                            <strong>Client: Office Location</strong>
+                            <br>
+                            <strong>Service Name</strong>
+                            <br>
+                            <strong>Client Country of Origin</strong>
+                            <br>
+                            <strong>Client Ethnicity</strong>
+                            <br>
+                            <strong>Total Value of Services Provided</strong>
+                            <br>
+                            <strong># of Beneficiaries</strong>
+                            <br><br>
+                            2. Bulk:
+                            <br>
+                            Make sure the columns include the following:
+                            <br><br>
+                            <strong>ICNA Relief Office: Account Name</strong>
+                            <br>
+                            <strong>Date Distributed</strong>
+                            <br>
+                            <strong>Bulk Distribution Event: Bulk Distribution Name</strong>
+                            <br>
+                            <strong>No of People Served</strong>
+                            <br><br>
+                            Before you export from Salesforce, turn Subtotals and Grand Total <strong>OFF</strong>.
+                            <br><br>
+                            3. Cash:
+                            <br>
+                            Make sure the columns include <strong>ONLY</strong> the following and no other columns:
+                            <br><br>
+                            <strong>Primary Campaign Source</strong>
+                            <br>
+                            <strong>Payment Amount Received</strong>
+                            <br>
+                            <strong>Close Date</strong>
+                            <br>
+                            <strong>Billing State/Province</strong>
+                            <br>
+                            <strong>Billing City</strong>
+                            <br>
+                            <strong>Billing Zip/Postal Code</strong>
+                            <br><br>
+                            Before you export from Salesforce, turn Subtotals and Grand Total <strong>OFF</strong>.
+                            <br><br>
+                            4. In-Kind:
+                            <br>
+                            No instructions. Get a copy from Power BI.
+                            <br><br>
+                            5. IRFAS:
+                            <br>
+                            No instructions. Get a copy from Power BI.
+                            <br><br>
+                            Before you upload, make sure you have the following files and follow these specific naming
+                            instructions:
+                            <br><br>
+                            1. Case Management: <strong>case_management.xlsx</strong>
+                            <br>
+                            2. Bulk: <strong>bulk.xlsx</strong>
+                            <br>
+                            3. Cash: <strong>cash.xlsx</strong>
+                            <br>
+                            4. In-Kind: <strong>in_kind.xlsx</strong>
+                            <br>
+                            5. IRFAS: <strong>irfas.xlsx</strong>
+                            <br><br>
+                            File names are <strong>NOT</strong> case sensitive.
+                        </p>
+                    </div>
+
                     <div id="instructions_revenue" class="cleaner-instructions" style="display: none;">
                         <p>
                             <strong>Special Instructions for Revenue Uploads:</strong>
@@ -775,6 +858,8 @@ def clean_uploaded_file(
         clean_multiple_current_revenue_imports(input_paths, original_filenames, output_path)
     elif report_type == "hunger_prevention":
         clean_multiple_hunger_prevention_imports(input_paths, original_filenames,output_path)
+    elif report_type == "refugee_services":
+        clean_multiple_refugee_services_imports(input_paths, original_filenames, output_path)
     else:
         # Temporary fallback for other report types.
         # These will eventually be replaced with their own multi-file cleaner functions.
@@ -794,17 +879,6 @@ def clean_uploaded_file(
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         background=background_tasks
     )
-
-# 1. Create a DataFrame
-data = {
-    'Name': ['Alice', 'Bob', 'Charlie'],
-    'Age': [25, 30, 35],
-    'City': ['New York', 'London', 'Paris']
-}
-df = pd.DataFrame(data)
-
-# 2. Export to Excel
-df.to_excel('output.xlsx', index=False)
 
 # ------------------------------------------------------------
 # LOCAL RUN COMMAND
