@@ -10,20 +10,20 @@ import supabase_client
 
 
 CAMPAIGN_NAME_TO_PSN = {
-    "back 2 school": 1,
-    "back2school": 1,
-    "disaster relief": 2,
-    "disaster relief services": 2,
-    "general": 3,
-    "grants": 3,             # generic/unspecified campaign -> General
-    "capacity building": 3,  # not one of the 9 tracked programs -> General
-    "health services": 4,
-    "hunger prevention": 5,
-    "fate": 6,
-    "muslim family services": 7,
-    "refugee services": 8,
-    "refugee services & community empowerment": 8,
-    "transitional housing": 9,
+    "back 2 school": (1, "Back2School"),
+    "back2school": (1, "Back2School"),
+    "disaster relief": (2, "Disaster Relief Services"),
+    "disaster relief services": (2, "Disaster Relief Services"),
+    "general": (3, "General"),
+    "grants": (3, "General"),             # generic/unspecified campaign -> General
+    "capacity building": (3, "General"),  # not one of the 9 tracked programs -> General
+    "health services": (4, "Health Services"),
+    "hunger prevention": (5, "Hunger Prevention"),
+    "fate": (6, "FATE"),
+    "muslim family services": (7, "Muslim Family Services"),
+    "refugee services": (8, "Refugee Services"),
+    "refugee services & community empowerment": (8, "Refugee Services"),
+    "transitional housing": (9, "Transitional Housing"),
 }
 
 
@@ -32,7 +32,15 @@ def campaign_name_to_psn(campaign_name):
         return 3  # blank Campaign Name -> General
 
     key = str(campaign_name).strip().lower()
-    return CAMPAIGN_NAME_TO_PSN.get(key, 3)  # unrecognized -> General
+    return CAMPAIGN_NAME_TO_PSN.get(key, (3, "General"))[0]  # unrecognized -> General
+
+
+def normalize_campaign_name(campaign_name):
+    if pd.isna(campaign_name):
+        return "General"
+
+    key = str(campaign_name).strip().lower()
+    return CAMPAIGN_NAME_TO_PSN.get(key, (3, "General"))[1]  # unrecognized -> General
 
 
 _grants_goals_cache = None
@@ -70,11 +78,17 @@ def build_grants_detail_worksheet(grants_df):
     df = grants_df.copy()
 
     df["PSN"] = df["Campaign Name"].apply(campaign_name_to_psn)
+    df["Campaign Name"] = df["Campaign Name"].apply(normalize_campaign_name)
 
-    df["GOAL AMOUNT"] = df.apply(
-        lambda row: lookup_goal_amount(row["Field Office"], row["Year"]),
-        axis=1,
-    )
+    # GOAL AMOUNT stays as an empty column for now -- not populated from
+    # the goals lookup per current instructions.
+    df["GOAL AMOUNT"] = pd.NA
+
+    # "Contact State  ↓" is a Salesforce grouped-report column: it's only
+    # populated on the first row of each state group, blank on the rest.
+    # Fill it down so every row shows its state.
+    if "Contact State ↓" in df.columns:
+        df["Contact State ↓"] = df["Contact State ↓"].ffill()
 
     df = df.rename(columns={
         "Date": "Payment Date",
