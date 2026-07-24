@@ -4,6 +4,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 import supabase_client
 import geography_maps
 from theme import page_shell, THEME_CSS
+from current_revenue import refresh_grants_goals_cache
 
 router = APIRouter()
 
@@ -27,6 +28,7 @@ def _nav():
         <a href="/admin/geography/overrides">Special Overrides</a>
         <a href="/admin/geography/cities">City/Zip &rarr; Office</a>
         <a href="/admin/geography/keywords">Keyword &rarr; Program</a>
+        <a href="/admin/geography/goals">Grants Goals</a>
         <a href="/" class="back">&larr; Back to Cleaner</a>
     </div>
     """
@@ -62,6 +64,7 @@ def admin_geography_home(request: Request):
             <li><b>Special Overrides</b> &mdash; edge-case rules, like the Kansas City Office override.</li>
             <li><b>City/Zip &rarr; Office</b> &mdash; the CA/TX/FL/VA/MO lookup table (9,000+ rows, searchable).</li>
             <li><b>Keyword &rarr; Program</b> &mdash; auto-detects program from campaign/source names.</li>
+            <li><b>Grants Goals</b> &mdash; fundraising goal per field office per year, used in the Grants Cleaner worksheet.</li>
         </ul>
     </div></body></html>
     """)
@@ -460,3 +463,75 @@ def update_keyword(request: Request, keyword: str = Form(...), program: str = Fo
     supabase_client.update_row("geo_keyword_to_program", "keyword", keyword, {"program": program})
     geography_maps.refresh_geo_cache()
     return RedirectResponse(url="/admin/geography/keywords?saved=Saved", status_code=303)
+
+
+# ------------------------------------------------------------
+# Grants field office goals
+# ------------------------------------------------------------
+
+@router.get("/admin/geography/goals", response_class=HTMLResponse)
+def list_goals(request: Request, year: str = "", saved: str = ""):
+    if not _authed(request):
+        return _login_redirect()
+
+    rows = supabase_client.fetch_all("grants_field_office_goals", order="year.desc,field_office.asc")
+    if year:
+        rows = [r for r in rows if str(r["year"]) == year]
+
+    all_years = sorted(set(str(r["year"]) for r in supabase_client.fetch_all("grants_field_office_goals")), reverse=True)
+    year_options = "".join(
+        f'<option value="{y}" {"selected" if y == year else ""}>{y}</option>' for y in all_years
+    )
+
+    rows_html = ""
+    for r in rows:
+        rows_html += f"""
+        <tr>
+            <form method="post" action="/admin/geography/goals/update">
+                <td>{r['field_office']}</td>
+                <td>{r['year']}</td>
+                <td>
+                    <input type="hidden" name="id" value="{r['id']}">
+                    <input type="text" name="initial_goal" value="{r['initial_goal']}">
+                </td>
+                <td><input type="text" name="revised_goal" value="{r['revised_goal']}"></td>
+                <td><button class="save-btn" type="submit">Save</button></td>
+            </form>
+        </tr>
+        """
+
+    return HTMLResponse(f"""
+    <html><head>{THEME_CSS}</head><body><div class="shell wide">
+        <h1>Grants Goals</h1>
+        <hr class="stitch">
+        {_nav()}
+        {_flash(saved)}
+        <form method="get" action="/admin/geography/goals">
+            <select name="year" onchange="this.form.submit()">
+                <option value="">All years</option>
+                {year_options}
+            </select>
+        </form>
+        <p style="color:#555;">
+            GOAL AMOUNT in the Grants Cleaner worksheet uses Initial Goal, matched by
+            field office + year. Revised Goal is tracked here for reference.
+        </p>
+        <table>
+            <tr><th>Field Office</th><th>Year</th><th>Initial Goal</th><th>Revised Goal</th><th></th></tr>
+            {rows_html}
+        </table>
+    </div></body></html>
+    """)
+
+
+@router.post("/admin/geography/goals/update")
+def update_goal(request: Request, id: str = Form(...), initial_goal: str = Form(...), revised_goal: str = Form(...)):
+    if not _authed(request):
+        return _login_redirect()
+
+    supabase_client.update_row("grants_field_office_goals", "id", id, {
+        "initial_goal": float(initial_goal or 0),
+        "revised_goal": float(revised_goal or 0),
+    })
+    refresh_grants_goals_cache()
+    return RedirectResponse(url="/admin/geography/goals?saved=Saved", status_code=303)

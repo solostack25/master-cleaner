@@ -6,6 +6,105 @@ from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 import geography_maps
 from datetime import date
+import supabase_client
+
+
+CAMPAIGN_NAME_TO_PSN = {
+    "back 2 school": 1,
+    "back2school": 1,
+    "disaster relief": 2,
+    "disaster relief services": 2,
+    "general": 3,
+    "grants": 3,             # generic/unspecified campaign -> General
+    "capacity building": 3,  # not one of the 9 tracked programs -> General
+    "health services": 4,
+    "hunger prevention": 5,
+    "fate": 6,
+    "muslim family services": 7,
+    "refugee services": 8,
+    "refugee services & community empowerment": 8,
+    "transitional housing": 9,
+}
+
+
+def campaign_name_to_psn(campaign_name):
+    if pd.isna(campaign_name):
+        return 3  # blank Campaign Name -> General
+
+    key = str(campaign_name).strip().lower()
+    return CAMPAIGN_NAME_TO_PSN.get(key, 3)  # unrecognized -> General
+
+
+_grants_goals_cache = None
+
+
+def refresh_grants_goals_cache():
+    global _grants_goals_cache
+    _grants_goals_cache = None
+
+
+def _load_grants_goals():
+    global _grants_goals_cache
+    if _grants_goals_cache is None:
+        rows = supabase_client.fetch_all("grants_field_office_goals")
+        _grants_goals_cache = {
+            (row["field_office"], int(row["year"])): row["initial_goal"]
+            for row in rows
+        }
+    return _grants_goals_cache
+
+
+def lookup_goal_amount(field_office, year):
+    goals = _load_grants_goals()
+    if pd.isna(year):
+        return pd.NA
+    return goals.get((field_office, int(year)), pd.NA)
+
+
+def build_grants_detail_worksheet(grants_df):
+    """Builds the detailed (non-aggregated) Grants worksheet, matching the
+    reference RS-PBI-style layout: REGION, RSN, CHAPTER, ... PSN, QUARTER.
+    Expects grants_df with geography + date columns already computed, but
+    BEFORE the column names get uppercased for the summary/subtraction step.
+    """
+    df = grants_df.copy()
+
+    df["PSN"] = df["Campaign Name"].apply(campaign_name_to_psn)
+
+    df["GOAL AMOUNT"] = df.apply(
+        lambda row: lookup_goal_amount(row["Field Office"], row["Year"]),
+        axis=1,
+    )
+
+    df = df.rename(columns={
+        "Date": "Payment Date",
+        "Region": "REGION",
+        "Region Number": "RSN",
+        "Chapter": "CHAPTER",
+        "Field Office": "FILED OFFICE",  # matches the reference file's spelling exactly
+        "Donation Name": "DONATION NAME",
+        "Quarter": "QUARTER",
+    })
+
+    # State is only used internally for geography assignment -- not part
+    # of the reference output, so it's dropped here (Contact State  ↓ is
+    # the column the report actually displays).
+    df = df.drop(columns=["State"], errors="ignore")
+
+    column_order = [
+        "REGION", "RSN", "CHAPTER", "Contact State ↓", "FILED OFFICE",
+        "Donation Record Type", "Payment Date", "Contact: Full Name",
+        "Payment Amount", "Campaign Name", "GOAL AMOUNT", "City",
+        "Payment Method", "ICNA Donations Types", "Notes", "Lead Source",
+        "Donation ID", "Comments", "Donation Ref", "Donations Snapshot ID",
+        "DONATION NAME", "Year", "Month Name", "Month Number", "PSN",
+        "QUARTER",
+    ]
+
+    existing_columns = [c for c in column_order if c in df.columns]
+    df = df[existing_columns]
+
+    return df
 
 
 FIRST_CURRENT_REVENUE_HEADER = "Contact: Mailing State/Province ↓"
@@ -386,13 +485,14 @@ def subtract_payment_amount_by_month_year_office(df1, df2):
 
     return merged_df
 
-def save_current_revenue_workbook(total_revenue_df, community_revenue_df, output_path):
+def save_current_revenue_workbook(total_revenue_df, community_revenue_df, grants_detail_df, output_path):
     output_path = Path(output_path)
 
     workbook = Workbook(write_only=True)
 
     total_sheet = workbook.create_sheet("Total Revenue")
     community_sheet = workbook.create_sheet("Community Revenue")
+    grants_sheet = workbook.create_sheet("Grants Cleaner")
 
     total_df_to_save = total_revenue_df.copy()
     total_df_to_save = total_df_to_save.astype(object)
@@ -408,6 +508,12 @@ def save_current_revenue_workbook(total_revenue_df, community_revenue_df, output
     for row in dataframe_to_rows(community_df_to_save, index=False, header=True):
         community_sheet.append(row)
 
+    grants_df_to_save = grants_detail_df.copy()
+    grants_df_to_save = grants_df_to_save.astype(object)
+    grants_df_to_save = grants_df_to_save.where(pd.notna(grants_df_to_save), None)
+
+    for row in dataframe_to_rows(grants_df_to_save, index=False, header=True):
+        grants_sheet.append(row)
 
     workbook.save(output_path)
 
@@ -527,6 +633,19 @@ def clean_multiple_current_revenue_imports(input_paths, input_files_names, outpu
 
     grants_df = geography_maps._add_date_columns(grants_df)
 
+    if len(grants_dataframes) > 0:
+        grants_detail_df = build_grants_detail_worksheet(grants_df)
+    else:
+        grants_detail_df = pd.DataFrame(columns=[
+            "REGION", "RSN", "CHAPTER", "Contact State ↓", "FILED OFFICE",
+            "Donation Record Type", "Payment Date", "Contact: Full Name",
+            "Payment Amount", "Campaign Name", "GOAL AMOUNT", "City",
+            "Payment Method", "ICNA Donations Types", "Notes", "Lead Source",
+            "Donation ID", "Comments", "Donation Ref", "Donations Snapshot ID",
+            "DONATION NAME", "Year", "Month Name", "Month Number", "PSN",
+            "QUARTER",
+        ])
+
     grants_df.columns = grants_df.columns.str.upper()
 
     grants_summary_df = create_total_revenue_summary(grants_df)
@@ -535,4 +654,4 @@ def clean_multiple_current_revenue_imports(input_paths, input_files_names, outpu
 
     community_revenue_summary_df = subtract_payment_amount_by_month_year_office(total_revenue_summary_df, grants_summary_df)
 
-    save_current_revenue_workbook(total_revenue_summary_df, community_revenue_summary_df, output_path)
+    save_current_revenue_workbook(total_revenue_summary_df, community_revenue_summary_df, grants_detail_df, output_path)
