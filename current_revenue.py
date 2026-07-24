@@ -80,6 +80,11 @@ def build_grants_detail_worksheet(grants_df):
     df["PSN"] = df["Campaign Name"].apply(campaign_name_to_psn)
     df["Campaign Name"] = df["Campaign Name"].apply(normalize_campaign_name)
 
+    if "ICNA Donations Types" in df.columns:
+        df["ICNA Donations Types"] = df["ICNA Donations Types"].replace(
+            "Capacity Building", "General"
+        )
+
     # GOAL AMOUNT stays as an empty column for now -- not populated from
     # the goals lookup per current instructions.
     df["GOAL AMOUNT"] = pd.NA
