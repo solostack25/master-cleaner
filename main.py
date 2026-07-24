@@ -17,9 +17,11 @@ from revenue_cleaner import clean_multiple_revenue_imports
 from current_revenue import clean_multiple_current_revenue_imports
 from hunger_prevention import clean_multiple_hunger_prevention_imports
 from refugee_services import clean_multiple_refugee_services_imports
+from admin_geography import router as admin_geography_router
 
 
 app = FastAPI()
+app.include_router(admin_geography_router)
 
 # ------------------------------------------------------------
 # ENVIRONMENT / SECURITY SETTINGS
@@ -222,6 +224,7 @@ def cleaner_page_html() -> str:
         <body style="font-family: Arial, sans-serif; max-width: 750px; margin: 60px auto; line-height: 1.5;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h2>ICNA Relief Master Cleaner</h2>
+                <a href="/admin/geography" style="margin-right: 16px;">Geography Admin</a>
                 <a href="/logout">Logout</a>
             </div>
 

@@ -3,202 +3,174 @@ from openpyxl import load_workbook
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 
-# Dictionary for Region assignment
-state_to_region = {
-    "VA": "DMV", "MD": "DMV", "DC": "DMV", "WV": "DMV",
-    "IL": "Midwest 1", "MI": "Midwest 1",
-    "ND": "Midwest 2", "SD": "Midwest 2", "NE": "Midwest 2", "MN": "Midwest 2",
-    "IA": "Midwest 2", "MO": "Midwest 2", "WI": "Midwest 2", "IN": "Midwest 2",
-    "OH": "Midwest 2", "KY": "Midwest 2",
-    "TN": "Southeast", "NC": "Southeast", "SC": "Southeast", "GA": "Southeast",
-    "AL": "Southeast", "MS": "Southeast", "LA": "Southeast", "FL": "Southeast",
-    "AR": "South Central", "TX": "South Central", "NM": "South Central",
-    "OK": "South Central", "KS": "South Central",
-    "WA": "West", "OR": "West", "CA": "West", "ID": "West", "MT": "West",
-    "WY": "West", "CO": "West", "NV": "West", "UT": "West", "AZ": "West",
-    "AK": "West", "HI": "West",
-    "ME": "Northeast", "VT": "Northeast", "NH": "Northeast", "CT": "Northeast",
-    "MA": "Northeast", "NY": "Northeast", "NJ": "Northeast", "DE": "Northeast",
-    "PA": "Northeast", "RI": "Northeast", 'HQ': 'Unassigned'
-}
+import supabase_client
 
-# Dictionary for RSN assignment based on Region
-region_to_rsn = {
-    "DMV": 1,
-    "Midwest 1": 2,
-    "Midwest 2": 3,
-    "Northeast": 4,
-    "South Central": 5,
-    "Southeast": 6,
-    "West": 7,
-    "Unassigned": 8
-}
+# ------------------------------------------------------------
+# In-memory cache of the geography config, loaded from Supabase.
+# Call refresh_geo_cache() after editing data in the admin dashboard
+# so a running app picks up changes without a redeploy.
+# ------------------------------------------------------------
 
-# Dictionary for Field Office assignment based on State
-state_to_field_office = {
-    "ME": "Maine-Statewide", "VT": "Vermont-Statewide", "NH": "New Hampshire-Statewide",
-    "MA": "Boston Office", "CT": "Connecticut-Statewide", "RI": "Rhode Island-Statewide",
-    "NY": "New York Office", "NJ": "New Jersey Office", "DE": "Delaware-Statewide",
-    "PA": "Philadelphia Office", "MD": "Baltimore Office", "DC": "District of Columbia",
-    "WV": "West Virginia-Statewide", "IL": "Chicago Office", "MI": "Detroit Office",
-    "ND": "North Dakota-Statewide", "SD": "South Dakota-Statewide", "NE": "Nebraska-Statewide",
-    "MN": "Minneapolis Office", "IA": "Cedar Rapids Office",
-    # "MO": "St. Louis Office",
-    "WI": "Wisconsin-Statewide", "IN": "Indianapolis Office", "OH": "Ohio-Statewide",
-    "KY": "Kentucky-Statewide", "TN": "Memphis Office", "NC": "Durham Office",
-    "SC": "Charleston Office", "GA": "Atlanta Office", "AL": "Alabama-Statewide",
-    "MS": "Mississippi-Statewide", "LA": "New Orleans Office", "AR": "Arkansas-Statewide",
-    "NM": "New Mexico-Statewide", "OK": "Oklahoma City Office", "KS": "Kansas City Office",
-    "WA": "Seattle Office", "OR": "Oregon-Statewide", "ID": "Idaho-Statewide",
-    "MT": "Montana-Statewide", "WY": "Wyoming-Statewide", "CO": "Denver Office",
-    "NV": "Nevada-Statewide", "UT": "Utah-Statewide", "AZ": "Phoenix Office",
-    "AK": "Alaska-Statewide", "HI": "Hawaii-Statewide", 'HQ': 'Unassigned'
-}
+state_to_region = {}
+region_to_rsn = {}
+state_to_field_office = {}
+chapter_lookup = {}          # (field_office, region) -> chapter, plus ("__default__", region) -> chapter
+special_overrides = {}       # field_office -> {"region": ..., "rsn": ..., "state": ...}
+state_splits = pd.DataFrame(columns=["Zip Code", "Main City", "County", "STATE", "ASSIGNED TO"])
+mapping = {}                 # keyword -> program (same name/shape irfas_cleaner.py already expects)
 
-split_field_office_to_state = {
-    "Alexandria Office": "VA",
-    "Richmond Office": "VA",
+states_of_interest = ['CA', 'TX', 'FL', 'VA', 'MO']
 
-    "Sacramento Office": "CA",
-    "Bay Area Office": "CA",
-    "Los Angeles Office": "CA",
-    "San Diego Office": "CA",
-
-    "Houston Office": "TX",
-    "Dallas Office": "TX",
-    "Austin Office": "TX",
-
-    "St. Louis Office": "MO",
-    "Kansas City Office": "KS",
-
-    "Miami Office": "FL",
-    "Tampa Office": "FL",
-    "Orlando Office": "FL",
-}
+zero_value_df = pd.read_csv("zero_values_2026_starter.csv")
 
 
+def refresh_geo_cache():
+    """Reload all geography config tables from Supabase into memory."""
+    global state_to_region, region_to_rsn, state_to_field_office
+    global chapter_lookup, special_overrides, state_splits, mapping
 
-# reads the data that assigns each city in CA, TX, FL, VA, MO to a Field Office
-state_splits = pd.read_csv("state_splits_cities.csv")
-
-
-# coverts the Zip Code column in state_splits to a string
-# Ensure all ZIP codes are strings and properly formatted
-state_splits['Zip Code'] = (
-    state_splits['Zip Code']
-    .fillna("")  # Replace NaN with empty string (or use "00000" if needed)
-    .astype(str)  # Convert to string
-    .str.split('.').str[0]  # Remove decimal if present (caused by float conversion)
-    .str.zfill(5)  # Ensure 5-digit format
-)
-
-chapter_map = {
-    "Northeast": {
-        "New England": ["Maine-Statewide", "Vermont-Statewide", "Boston Office", "New Hampshire-Statewide",
-                        "Rhode Island-Statewide"],
-        "default": "Northeast Other"
-    },
-    "DMV": {
-        "Virginia": ["Richmond Office", "Alexandria Office"],
-        "default": "DMV Other"
-    },
-    "West": {
-        "California": ["Sacramento Office", "Bay Area Office", "Los Angeles Office", "San Diego Office"],
-        "default": "West Other"
-    },
-    "South Central": {
-        "Texas": ["Houston Office", "Austin Office", "Dallas Office"],
-        "default": "South Central Other"
-    },
-    "Southeast": {
-        "Florida": ["Orlando Office", "South Florida Office", "Tampa Office"],
-        "default": "Southeast Other"
-    },
-    "Unassigned": {
-        "default": "National"
+    state_to_region = {
+        row["state"]: row["region"]
+        for row in supabase_client.fetch_all("geo_state_to_region")
     }
-}
+
+    region_to_rsn = {
+        row["region"]: row["rsn"]
+        for row in supabase_client.fetch_all("geo_region_to_rsn")
+    }
+
+    state_to_field_office = {
+        row["state"]: row["field_office"]
+        for row in supabase_client.fetch_all("geo_state_to_field_office")
+    }
+
+    chapter_lookup = {
+        (row["field_office"], row["region"]): row["chapter"]
+        for row in supabase_client.fetch_all("geo_chapter_map")
+    }
+
+    special_overrides = {
+        row["when_field_office"]: {
+            "region": row.get("set_region"),
+            "rsn": row.get("set_rsn"),
+            "state": row.get("set_state"),
+        }
+        for row in supabase_client.fetch_all("geo_special_overrides")
+        if row.get("active")
+    }
+
+    splits_rows = supabase_client.fetch_all("geo_state_splits_cities")
+    if splits_rows:
+        splits_df = pd.DataFrame(splits_rows)
+        splits_df = splits_df.rename(columns={
+            "zip_code": "Zip Code",
+            "main_city": "Main City",
+            "county": "County",
+            "state": "STATE",
+            "assigned_to": "ASSIGNED TO",
+        })
+        splits_df["Zip Code"] = (
+            splits_df["Zip Code"].fillna("").astype(str).str.split(".").str[0].str.zfill(5)
+        )
+        state_splits = splits_df
+    else:
+        state_splits = pd.DataFrame(columns=["Zip Code", "Main City", "County", "STATE", "ASSIGNED TO"])
+
+    mapping = {
+        row["keyword"]: row["program"]
+        for row in supabase_client.fetch_all("geo_keyword_to_program")
+    }
+
+
+# Load once at import time. If Supabase isn't configured yet (e.g. local
+# dev without env vars set), fall back silently and leave the caches
+# empty rather than crashing app startup.
+try:
+    refresh_geo_cache()
+except Exception as error:
+    print(f"[geography_maps] Could not load geo config from Supabase at startup: {error}")
 
 
 def assign_chapter(row):
     region = row['Region']
     office = row['Field Office']
 
-    region_map = chapter_map.get(region)
-    if region_map:
-        for chapter, offices in region_map.items():
-            if chapter != "default" and office in offices:
-                return chapter
-        return region_map["default"]
-    else:
-        return region  # fallback for any other region
+    chapter = chapter_lookup.get((office, region))
+    if chapter:
+        return chapter
+
+    default_chapter = chapter_lookup.get(("__default__", region))
+    if default_chapter:
+        return default_chapter
+
+    return region  # fallback for any other region
 
 
-zero_value_df = pd.read_csv("zero_values_2026_starter.csv")
-
-states_of_interest = ['CA', 'TX', 'FL', 'VA', 'MO']
-
-# creates a function to assign a Field Office to rows that correspond to the following 5 states: CA, TX, FL, VA, MO
 def assign_field_office(row, zip_there):
-    states_of_interest = {'CA', 'TX', 'FL', 'VA', 'MO'}  # Use a set for faster lookup
-
     if row['State'] in states_of_interest:
         city = row['City']
         state = row['State']
         zip_code = row['Zipcode']
 
-        # Normalize city name
         if isinstance(city, str):
             city = city.title().strip()
         else:
             city = 'Unknown'
 
-        if not state_splits[
+        city_match = state_splits[
             (state_splits['Main City'] == city) & (state_splits['STATE'] == state)
-        ].empty:
-            field_office = state_splits.loc[
-                (state_splits['Main City'] == city) & (state_splits['STATE'] == state),
-                "ASSIGNED TO"
-            ].values[0]
+        ]
+
+        if not city_match.empty:
+            field_office = city_match["ASSIGNED TO"].values[0]
         elif city == 'St Louis':
             field_office = 'St. Louis Office'
         elif city == 'St Petersburg':
             field_office = 'Miami Office'
-        elif zip_there and not state_splits[
-            (state_splits['Zip Code'] == zip_code) & (state_splits['STATE'] == state)
-        ].empty and zip_code != "00000":
-            field_office = state_splits.loc[
-                (state_splits['Zip Code'] == zip_code) & (state_splits['STATE'] == state),
-                "ASSIGNED TO"
-            ].values[0]
+        elif zip_there and zip_code != "00000":
+            zip_match = state_splits[
+                (state_splits['Zip Code'] == zip_code) & (state_splits['STATE'] == state)
+            ]
+            if not zip_match.empty:
+                field_office = zip_match["ASSIGNED TO"].values[0]
+            else:
+                field_office = _default_office_for_state(state, city, zip_code)
         else:
-            # Default based on state
-            state_defaults = {
-                'TX': 'Dallas Office',
-                'FL': 'Miami Office',
-                'CA': 'Los Angeles Office',
-                'VA': 'Alexandria Office',
-                'MO': 'St. Louis Office'
-            }
-            field_office = state_defaults.get(state, 'Unknown')
-            print(f"No reference for {city}, {state} {zip_code}\nAutomatically assigned to {field_office}\n")
+            field_office = _default_office_for_state(state, city, zip_code)
 
-        # Assign Region and RSN if Kansas City Office
-        if field_office == 'Kansas City Office':
-            row['Region'] = 'South Central'
-            row['Region Number'] = 5
-            row['State'] = 'KS'
+        override = special_overrides.get(field_office)
+        if override:
+            if override.get("region"):
+                row['Region'] = override["region"]
+            if override.get("rsn") is not None:
+                row['Region Number'] = override["rsn"]
+            if override.get("state"):
+                row['State'] = override["state"]
 
         row['Field Office'] = field_office
 
     return row
 
-# A function to assign unrecognized states to HQ
+
+def _default_office_for_state(state, city, zip_code):
+    state_defaults = {
+        'TX': 'Dallas Office',
+        'FL': 'Miami Office',
+        'CA': 'Los Angeles Office',
+        'VA': 'Alexandria Office',
+        'MO': 'St. Louis Office'
+    }
+    field_office = state_defaults.get(state, 'Unknown')
+    print(f"No reference for {city}, {state} {zip_code}\nAutomatically assigned to {field_office}\n")
+    return field_office
+
+
 def hq_states(row):
     state = row["State"]
     if (state not in state_to_region.keys()) and (state not in states_of_interest):
         row['State'] = 'HQ'
     return row
+
 
 def _add_date_columns(df):
     df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
@@ -232,6 +204,7 @@ def _add_date_columns(df):
 
     return df
 
+
 def save_excel_light(df, output_path):
     workbook = Workbook(write_only=True)
     worksheet = workbook.create_sheet("Cleaned Volunteers")
@@ -244,6 +217,7 @@ def save_excel_light(df, output_path):
         worksheet.append(row)
 
     workbook.save(output_path)
+
 
 def format_currency_column(output_path, currency_column):
     workbook = load_workbook(output_path)
@@ -270,7 +244,6 @@ def format_currency_column(output_path, currency_column):
         if value is None or str(value).strip() == "":
             continue
 
-        # If it is already a number, keep it.
         if isinstance(value, (int, float)):
             numeric_value = value
         else:
@@ -281,24 +254,15 @@ def format_currency_column(output_path, currency_column):
                 .replace(",", "")
             )
 
-            # Handle accounting-style negatives like ($1,250.00)
             if cleaned_value.startswith("(") and cleaned_value.endswith(")"):
                 cleaned_value = "-" + cleaned_value[1:-1]
 
             try:
                 numeric_value = float(cleaned_value)
             except ValueError:
-                # If it cannot be converted, leave it as-is.
                 continue
 
-        # Replace the cell value with the numeric version.
         cell.value = numeric_value
-
-        # Format display as dollars.
         cell.number_format = '$#,##0.00'
 
     workbook.save(output_path)
-
-program_assigner_df = pd.read_csv("Word List.csv")
-# Build mapping dictionary
-mapping = dict(zip(program_assigner_df["Keyword"], program_assigner_df["Program"]))
