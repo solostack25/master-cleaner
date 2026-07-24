@@ -3,21 +3,9 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 
 import supabase_client
 import geography_maps
+from theme import page_shell, THEME_CSS
 
 router = APIRouter()
-
-PAGE_STYLE = """
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 950px; margin: 40px auto; line-height: 1.5; }
-        table { border-collapse: collapse; width: 100%; margin-top: 16px; }
-        th, td { border: 1px solid #ccc; padding: 6px 10px; text-align: left; font-size: 14px; }
-        th { background: #f0f0f0; }
-        input[type=text], select { padding: 4px; width: 100%; box-sizing: border-box; }
-        .nav a { margin-right: 16px; }
-        .save-btn { padding: 4px 10px; }
-        .flash { background: #e6ffed; border: 1px solid #34a853; padding: 8px 12px; margin-bottom: 16px; }
-    </style>
-"""
 
 
 def _authed(request: Request) -> bool:
@@ -30,7 +18,7 @@ def _login_redirect():
 
 def _nav():
     return """
-    <div class="nav">
+    <div class="nav-rail">
         <a href="/admin/geography">Overview</a>
         <a href="/admin/geography/regions">State &rarr; Region</a>
         <a href="/admin/geography/rsn">Region &rarr; RSN</a>
@@ -39,9 +27,8 @@ def _nav():
         <a href="/admin/geography/overrides">Special Overrides</a>
         <a href="/admin/geography/cities">City/Zip &rarr; Office</a>
         <a href="/admin/geography/keywords">Keyword &rarr; Program</a>
-        <a href="/">&larr; Back to Cleaner</a>
+        <a href="/" class="back">&larr; Back to Cleaner</a>
     </div>
-    <hr style="margin: 16px 0 24px 0;">
     """
 
 
@@ -57,8 +44,9 @@ def admin_geography_home(request: Request):
         return _login_redirect()
 
     return HTMLResponse(f"""
-    <html><head>{PAGE_STYLE}</head><body>
+    <html><head>{THEME_CSS}</head><body><div class="shell wide">
         <h1>Geography &amp; Config Admin</h1>
+        <hr class="stitch">
         {_nav()}
         <p>
             This dashboard edits the shared geography and keyword rules that every
@@ -75,7 +63,7 @@ def admin_geography_home(request: Request):
             <li><b>City/Zip &rarr; Office</b> &mdash; the CA/TX/FL/VA/MO lookup table (9,000+ rows, searchable).</li>
             <li><b>Keyword &rarr; Program</b> &mdash; auto-detects program from campaign/source names.</li>
         </ul>
-    </body></html>
+    </div></body></html>
     """)
 
 
@@ -111,15 +99,16 @@ def list_regions(request: Request, saved: str = ""):
         """
 
     return HTMLResponse(f"""
-    <html><head>{PAGE_STYLE}</head><body>
+    <html><head>{THEME_CSS}</head><body><div class="shell wide">
         <h1>State &rarr; Region</h1>
+        <hr class="stitch">
         {_nav()}
         {_flash(saved)}
         <table>
             <tr><th>State</th><th>Region</th><th></th></tr>
             {rows_html}
         </table>
-    </body></html>
+    </div></body></html>
     """)
 
 
@@ -160,15 +149,16 @@ def list_rsn(request: Request, saved: str = ""):
         """
 
     return HTMLResponse(f"""
-    <html><head>{PAGE_STYLE}</head><body>
+    <html><head>{THEME_CSS}</head><body><div class="shell wide">
         <h1>Region &rarr; RSN</h1>
+        <hr class="stitch">
         {_nav()}
         {_flash(saved)}
         <table>
             <tr><th>Region</th><th>RSN</th><th></th></tr>
             {rows_html}
         </table>
-    </body></html>
+    </div></body></html>
     """)
 
 
@@ -209,8 +199,9 @@ def list_offices(request: Request, saved: str = ""):
         """
 
     return HTMLResponse(f"""
-    <html><head>{PAGE_STYLE}</head><body>
+    <html><head>{THEME_CSS}</head><body><div class="shell wide">
         <h1>State &rarr; Default Field Office</h1>
+        <hr class="stitch">
         {_nav()}
         {_flash(saved)}
         <p style="color:#555;">CA, TX, FL, VA, MO are handled by the City/Zip table instead, so they don't appear here.</p>
@@ -218,7 +209,7 @@ def list_offices(request: Request, saved: str = ""):
             <tr><th>State</th><th>Field Office</th><th></th></tr>
             {rows_html}
         </table>
-    </body></html>
+    </div></body></html>
     """)
 
 
@@ -261,8 +252,9 @@ def list_chapters(request: Request, saved: str = ""):
         """
 
     return HTMLResponse(f"""
-    <html><head>{PAGE_STYLE}</head><body>
+    <html><head>{THEME_CSS}</head><body><div class="shell wide">
         <h1>Field Office &rarr; Chapter</h1>
+        <hr class="stitch">
         {_nav()}
         {_flash(saved)}
         <p style="color:#555;">"(default for region)" rows apply to any office in that region not listed individually.</p>
@@ -270,7 +262,7 @@ def list_chapters(request: Request, saved: str = ""):
             <tr><th>Region</th><th>Field Office</th><th>Chapter</th><th></th></tr>
             {rows_html}
         </table>
-    </body></html>
+    </div></body></html>
     """)
 
 
@@ -316,8 +308,9 @@ def list_overrides(request: Request, saved: str = ""):
         """
 
     return HTMLResponse(f"""
-    <html><head>{PAGE_STYLE}</head><body>
+    <html><head>{THEME_CSS}</head><body><div class="shell wide">
         <h1>Special Override Rules</h1>
+        <hr class="stitch">
         {_nav()}
         {_flash(saved)}
         <p style="color:#555;">
@@ -329,7 +322,7 @@ def list_overrides(request: Request, saved: str = ""):
             <tr><th>Description</th><th>When Field Office =</th><th>Set Region</th><th>Set RSN</th><th>Set State</th><th>Active</th><th></th></tr>
             {rows_html}
         </table>
-    </body></html>
+    </div></body></html>
     """)
 
 
@@ -384,8 +377,9 @@ def search_cities(request: Request, q: str = "", saved: str = ""):
         """
 
     return HTMLResponse(f"""
-    <html><head>{PAGE_STYLE}</head><body>
+    <html><head>{THEME_CSS}</head><body><div class="shell wide">
         <h1>City/Zip &rarr; Office (CA, TX, FL, VA, MO)</h1>
+        <hr class="stitch">
         {_nav()}
         {_flash(saved)}
         <form method="get" action="/admin/geography/cities">
@@ -397,7 +391,7 @@ def search_cities(request: Request, q: str = "", saved: str = ""):
             <tr><th>City</th><th>State</th><th>Zip</th><th>Assigned Office</th><th></th></tr>
             {rows_html}
         </table>
-    </body></html>
+    </div></body></html>
     """)
 
 
@@ -441,8 +435,9 @@ def list_keywords(request: Request, q: str = "", saved: str = ""):
         """
 
     return HTMLResponse(f"""
-    <html><head>{PAGE_STYLE}</head><body>
+    <html><head>{THEME_CSS}</head><body><div class="shell wide">
         <h1>Keyword &rarr; Program</h1>
+        <hr class="stitch">
         {_nav()}
         {_flash(saved)}
         <form method="get" action="/admin/geography/keywords">
@@ -453,7 +448,7 @@ def list_keywords(request: Request, q: str = "", saved: str = ""):
             <tr><th>Keyword</th><th>Program</th><th></th></tr>
             {rows_html}
         </table>
-    </body></html>
+    </div></body></html>
     """)
 
 

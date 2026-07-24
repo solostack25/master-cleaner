@@ -18,6 +18,7 @@ from current_revenue import clean_multiple_current_revenue_imports
 from hunger_prevention import clean_multiple_hunger_prevention_imports
 from refugee_services import clean_multiple_refugee_services_imports
 from admin_geography import router as admin_geography_router
+from theme import page_shell, THEME_CSS
 
 
 app = FastAPI()
@@ -168,47 +169,35 @@ def login_page_html(error_message: str = "") -> str:
     error_html = ""
 
     if error_message:
-        error_html = f"""
-        <p style="color: #b00020; font-weight: bold;">
-            {error_message}
-        </p>
-        """
+        error_html = f'<div class="error-text">{error_message}</div>'
 
-    return f"""
-    <html>
-        <head>
-            <title>Master Cleaner - Employee Access</title>
-        </head>
+    body = f"""
+        <div class="topbar-title">
+            <div class="seal">IR</div>
+            <h1>Master Cleaner</h1>
+        </div>
+        <hr class="stitch">
 
-        <body style="font-family: Arial, sans-serif; max-width: 650px; margin: 60px auto; line-height: 1.5;">
-            <h2>ICNA Relief Master Cleaner</h2>
+        <p class="lede">Enter the employee access key to continue.</p>
 
-            <p>
-                Enter the employee access key to continue.
-            </p>
+        {error_html}
 
-            {error_html}
-
+        <div class="card">
             <form action="/login" method="post">
-                <label for="access_key">Access Key:</label>
-                <br>
+                <label for="access_key">Access Key</label>
                 <input
                     type="password"
                     name="access_key"
                     id="access_key"
                     required
-                    style="width: 320px; padding: 8px; margin-top: 6px;"
                 >
-
                 <br><br>
-
-                <button type="submit" style="padding: 10px 16px;">
-                    Enter
-                </button>
+                <button type="submit">Enter</button>
             </form>
-        </body>
-    </html>
+        </div>
     """
+
+    return page_shell("Master Cleaner - Employee Access", body)
 
 
 def cleaner_page_html() -> str:
@@ -219,32 +208,34 @@ def cleaner_page_html() -> str:
     <html>
         <head>
             <title>ICNA Relief Master Cleaner</title>
+            THEME_CSS_PLACEHOLDER
         </head>
 
-        <body style="font-family: Arial, sans-serif; max-width: 750px; margin: 60px auto; line-height: 1.5;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h2>ICNA Relief Master Cleaner</h2>
-                <a href="/admin/geography" style="margin-right: 16px;">Geography Admin</a>
-                <a href="/logout">Logout</a>
+        <body>
+          <div class="shell">
+            <div class="topbar">
+                <div class="topbar-title">
+                    <div class="seal">IR</div>
+                    <h1>Master Cleaner</h1>
+                </div>
+                <div class="topbar-links">
+                    <a href="/admin/geography">Geography Admin</a>
+                    <a href="/logout">Logout</a>
+                </div>
             </div>
+            <hr class="stitch">
 
-            <p>
+            <p class="lede">
                 Upload Excel files, choose the report type, <strong>follow the instructions before uploading</strong>, and download the processed result.
             </p>
-            
-            </p>
-
-            <hr style="margin: 24px 0;">
 
             <form action="/clean" method="post" enctype="multipart/form-data">
 
-                <label for="report_type"><strong>Select report type:</strong></label>
-                <br>
+                <label for="report_type">Select report type</label>
                 <select 
                     name="report_type" 
                     id="report_type"
                     required
-                    style="padding: 8px; width: 320px; margin-top: 6px;"
                 >
                     <option value="current_revenue">Current Revenue</option>
                     <option value="expenditure">Expenditure</option>
@@ -258,7 +249,7 @@ def cleaner_page_html() -> str:
 
                 <div id="instructions_section" style="margin-top: 20px;">
 
-                    <div id="instructions_current_revenue" class="cleaner-instructions" style="display: none;">
+                    <div id="instructions_current_revenue" class="cleaner-instructions instructions" style="display: none;">
                         <p>
                             <strong>Special Instructions for Current Revenue Uploads:</strong>
                             <br><br>
@@ -277,7 +268,7 @@ def cleaner_page_html() -> str:
                         </p>
                     </div>
 
-                    <div id="instructions_expenditure" class="cleaner-instructions" style="display: none;">
+                    <div id="instructions_expenditure" class="cleaner-instructions instructions" style="display: none;">
                         <p>
                             <strong>Special Instructions for Expenditure Uploads:</strong>
                             <br><br>
@@ -323,7 +314,7 @@ def cleaner_page_html() -> str:
                         </p>
                     </div>
                     
-                    <div id="instructions_hunger_prevention" class="cleaner-instructions" style="display: none;">
+                    <div id="instructions_hunger_prevention" class="cleaner-instructions instructions" style="display: none;">
                         <p>
                             <strong>Special Instructions for Hunger Prevention Uploads:</strong>
                             <br><br>
@@ -402,7 +393,7 @@ def cleaner_page_html() -> str:
                         </p>
                     </div>
                     
-                    <div id="instructions_refugee_services" class="cleaner-instructions" style="display: none;">
+                    <div id="instructions_refugee_services" class="cleaner-instructions instructions" style="display: none;">
                         <p>
                             <strong>Special Instructions for Refugee Services Uploads:</strong>
                             <br><br>
@@ -483,7 +474,7 @@ def cleaner_page_html() -> str:
                         </p>
                     </div>
 
-                    <div id="instructions_revenue" class="cleaner-instructions" style="display: none;">
+                    <div id="instructions_revenue" class="cleaner-instructions instructions" style="display: none;">
                         <p>
                             <strong>Special Instructions for Revenue Uploads:</strong>
                             <br><br>
@@ -497,7 +488,7 @@ def cleaner_page_html() -> str:
                         </p>
                     </div>
 
-                    <div id="instructions_in_kind_donations" class="cleaner-instructions" style="display: none;">
+                    <div id="instructions_in_kind_donations" class="cleaner-instructions instructions" style="display: none;">
                         <p>
                             <strong>Special Instructions for In-Kind Donations Uploads:</strong>
                             <br><br>
@@ -525,7 +516,7 @@ def cleaner_page_html() -> str:
                         </p>
                     </div>
 
-                    <div id="instructions_irfas" class="cleaner-instructions" style="display: none;">
+                    <div id="instructions_irfas" class="cleaner-instructions instructions" style="display: none;">
                         <p>
                             <strong>Special Instructions for IRFAS Uploads:</strong>
                             <br><br>
@@ -533,7 +524,7 @@ def cleaner_page_html() -> str:
                         </p>
                     </div>
 
-                    <div id="instructions_volunteers" class="cleaner-instructions" style="display: none;">
+                    <div id="instructions_volunteers" class="cleaner-instructions instructions" style="display: none;">
                         <p>
                             <strong>Special Instructions for Volunteers Uploads:</strong>
                             <br><br>
@@ -563,15 +554,14 @@ def cleaner_page_html() -> str:
                         style="padding: 8px; width: 320px; margin-top: 6px;"
                     >
 
-                    <p style="font-size: 13px; color: #555; margin-top: 6px;">
+                    <p style="font-size: 13px; color: var(--muted); margin-top: 6px;">
                         Select the month and year this expenditure file is for.
                     </p>
                 </div>
 
                 <br>
 
-                <label for="uploaded_files"><strong>Upload Excel file(s):</strong></label>
-                <br>
+                <label for="uploaded_files">Upload Excel file(s)</label>
                 <input 
                     type="file" 
                     name="uploaded_files" 
@@ -584,11 +574,10 @@ def cleaner_page_html() -> str:
 
                 <br><br>
 
-                <button type="submit" style="padding: 10px 16px;">
-                    Run Cleaner
-                </button>
+                <button type="submit">Run Cleaner</button>
 
             </form>
+          </div>
 
             <script>
                 const reportTypeSelect = document.getElementById("report_type");
@@ -634,32 +623,26 @@ def cleaner_page_html() -> str:
             </script>
         </body>
     </html>
-    """
+    """.replace("THEME_CSS_PLACEHOLDER", THEME_CSS)
 
 
 def error_page_html(message: str) -> str:
     """
     Returns a simple error page.
     """
-    return f"""
-    <html>
-        <head>
-            <title>Master Cleaner - Error</title>
-        </head>
+    body = f"""
+        <div class="topbar-title">
+            <div class="seal">!</div>
+            <h1>Something went wrong</h1>
+        </div>
+        <hr class="stitch">
 
-        <body style="font-family: Arial, sans-serif; max-width: 700px; margin: 60px auto; line-height: 1.5;">
-            <h2>Something went wrong</h2>
+        <div class="error-text">{message}</div>
 
-            <p style="color: #b00020; font-weight: bold;">
-                {message}
-            </p>
-
-            <p>
-                <a href="/">Return to Master Cleaner</a>
-            </p>
-        </body>
-    </html>
+        <p><a href="/" class="btn" style="text-decoration:none; display:inline-block; margin-top: 12px;">Return to Master Cleaner</a></p>
     """
+
+    return page_shell("Master Cleaner - Error", body)
 
 
 # ------------------------------------------------------------
