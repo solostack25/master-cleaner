@@ -7,7 +7,6 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 import geography_maps
 
 FIRST_HEADER = "Primary Campaign Source ↑"
-LAST_HEADER = "Mailing Zip/Postal Code"
 
 
 def normalize_header_value(value):
@@ -19,20 +18,50 @@ def normalize_header_value(value):
 
 def find_header_bounds(df):
     first_target = normalize_header_value(FIRST_HEADER)
-    last_target = normalize_header_value(LAST_HEADER)
 
     for row_number, row in df.iterrows():
         normalized_row = [normalize_header_value(v) for v in row]
 
         if first_target in normalized_row:
             first_column_number = normalized_row.index(first_target)
-            if last_target in normalized_row[first_column_number:]:
-                last_column_number = normalized_row.index(last_target, first_column_number)
-                return row_number, first_column_number, last_column_number
+
+            # Scan rightward for the extent of the header row. Allow
+            # skipping exactly one blank spacer column without stopping
+            # (these reports always have one between the campaign source
+            # column and the rest), so we don't need to know the exact
+            # name of the last column.
+            last_column_number = first_column_number
+            blank_run = 0
+
+            for column_number in range(first_column_number, len(normalized_row)):
+                value_clean = normalized_row[column_number]
+
+                if value_clean == "":
+                    blank_run += 1
+                    if blank_run > 1:
+                        break
+                    continue
+
+                blank_run = 0
+                last_column_number = column_number
+
+            return row_number, first_column_number, last_column_number
 
     raise ValueError(
-        f"Could not find a header row with columns '{FIRST_HEADER}' through '{LAST_HEADER}'."
+        f"Could not find a header row starting with column '{FIRST_HEADER}'."
     )
+
+
+def find_fuzzy_column(columns, *keywords):
+    """Find the first column whose (lowercased) name contains any of the
+    given keywords -- lets us match 'Mailing City', 'Billing City', or
+    just 'City' without needing an exact name."""
+    for column in columns:
+        column_lower = column.lower()
+        for keyword in keywords:
+            if keyword in column_lower:
+                return column
+    return None
 
 
 def clean_geography_and_time_dataframe(input_path):
@@ -83,14 +112,38 @@ def clean_multiple_geography_and_time_imports(input_paths, output_path):
 
     df = df.loc[:, df.columns != ""]
 
-    df = df.rename(columns={
-        "Primary Campaign Source ↑": "Campaign Source",
-        "Payment Amount Received": "Payment Amount",
-        "Close Date": "Date",
-        "Mailing City": "City",
-        "Mailing State/Province": "State",
-        "Mailing Zip/Postal Code": "Zipcode",
-    })
+    city_column = find_fuzzy_column(df.columns, "city")
+    state_column = find_fuzzy_column(df.columns, "state", "province")
+    zip_column = find_fuzzy_column(df.columns, "zip", "postal")
+
+    rename_map = {"Primary Campaign Source ↑": "Campaign Source"}
+
+    for column in df.columns:
+        column_lower = column.lower()
+        if "payment amount" in column_lower or column_lower == "amount":
+            rename_map[column] = "Payment Amount"
+        elif "close date" in column_lower or column_lower == "date":
+            rename_map[column] = "Date"
+
+    if city_column:
+        rename_map[city_column] = "City"
+    if state_column:
+        rename_map[state_column] = "State"
+    if zip_column:
+        rename_map[zip_column] = "Zipcode"
+
+    missing = [
+        name for name, found in
+        [("City", city_column), ("State", state_column), ("Zipcode", zip_column)]
+        if not found
+    ]
+    if missing:
+        raise ValueError(
+            f"Could not find a column for: {', '.join(missing)}. "
+            f"Columns found in file: {list(df.columns)}"
+        )
+
+    df = df.rename(columns=rename_map)
 
     # "Campaign Source" is the Salesforce grouped-report column -- only
     # populated on the first row of each campaign group, blank on the rest.
