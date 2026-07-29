@@ -28,24 +28,23 @@ def find_column(normalized_row, *keywords):
 
 
 def find_header_row(df):
-    """Locate the row containing the Campaign Source column and return
-    that row number plus the column index for every field we need,
-    regardless of ordering or gaps between them."""
+    """Locate the header row by finding the 5 fields this cleaner actually
+    needs (amount, date, city, state, zip) all present in the same row,
+    regardless of column order or gaps between them. The campaign/grouping
+    column (labeled differently across export variants -- "Primary
+    Campaign Source", "Subheads", etc.) is matched separately and is
+    optional, since it's just a label, not something geography/time
+    assignment depends on."""
     for row_number, row in df.iterrows():
         normalized_row = [normalize_header_value(v) for v in row]
 
-        campaign_col = find_column(normalized_row, "campaign source")
-        if campaign_col is None:
-            continue
-
-        amount_col = find_column(normalized_row, "payment amount", "amount received")
-        date_col = find_column(normalized_row, "close date", "payment date")
+        amount_col = find_column(normalized_row, "payment amount", "amount received", "amount")
+        date_col = find_column(normalized_row, "close date", "payment date", "date")
         city_col = find_column(normalized_row, "city")
         state_col = find_column(normalized_row, "state", "province")
         zip_col = find_column(normalized_row, "zip", "postal")
 
         found = {
-            "Campaign Source": campaign_col,
             "Payment Amount": amount_col,
             "Date": date_col,
             "City": city_col,
@@ -53,18 +52,20 @@ def find_header_row(df):
             "Zipcode": zip_col,
         }
 
-        missing = [name for name, col in found.items() if col is None]
-        if missing:
-            raise ValueError(
-                f"Found the header row (Campaign Source at column {campaign_col}) "
-                f"but could not find a column for: {', '.join(missing)}. "
-                f"Header row contents: {normalized_row}"
-            )
+        if any(col is None for col in found.values()):
+            continue
+
+        # Campaign/grouping column is optional -- try several known labels.
+        campaign_col = find_column(
+            normalized_row, "campaign source", "subhead", "campaign name", "campaign"
+        )
+        found["Campaign Source"] = campaign_col
 
         return row_number, found
 
     raise ValueError(
-        "Could not find a header row containing a 'Campaign Source' column."
+        "Could not find a header row containing columns for amount, date, "
+        "city, state, and zip."
     )
 
 
@@ -78,7 +79,7 @@ def clean_geography_and_time_dataframe(input_path):
     data = raw.iloc[header_row_number + 1:].reset_index(drop=True)
 
     df = pd.DataFrame({
-        name: data.iloc[:, col_index]
+        name: (data.iloc[:, col_index] if col_index is not None else pd.NA)
         for name, col_index in columns.items()
     })
 
