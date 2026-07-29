@@ -117,25 +117,28 @@ def assign_field_office(row, zip_there):
         else:
             city = 'Unknown'
 
-        city_match = state_splits[
-            (state_splits['Main City'] == city) & (state_splits['STATE'] == state)
-        ]
+        field_office = None
 
-        if not city_match.empty:
-            field_office = city_match["ASSIGNED TO"].values[0]
-        elif city == 'St Louis':
-            field_office = 'St. Louis Office'
-        elif city == 'St Petersburg':
-            field_office = 'Miami Office'
-        elif zip_there and zip_code != "00000":
+        if zip_there and zip_code and zip_code != "00000":
             zip_match = state_splits[
                 (state_splits['Zip Code'] == zip_code) & (state_splits['STATE'] == state)
             ]
             if not zip_match.empty:
                 field_office = zip_match["ASSIGNED TO"].values[0]
-            else:
-                field_office = _default_office_for_state(state, city, zip_code)
-        else:
+
+        if field_office is None:
+            city_match = state_splits[
+                (state_splits['Main City'] == city) & (state_splits['STATE'] == state)
+            ]
+            if not city_match.empty:
+                field_office = city_match["ASSIGNED TO"].values[0]
+
+        if field_office is None and city == 'St Louis':
+            field_office = 'St. Louis Office'
+        elif field_office is None and city == 'St Petersburg':
+            field_office = 'Miami Office'
+
+        if field_office is None:
             field_office = _default_office_for_state(state, city, zip_code)
 
         override = special_overrides.get(field_office)
