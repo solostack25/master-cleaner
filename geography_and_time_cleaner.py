@@ -1,81 +1,86 @@
 from pathlib import Path
-import re
 
 import pandas as pd
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 import geography_maps
 
-FIRST_HEADER = "Primary Campaign Source ↑"
-
 
 def normalize_header_value(value):
     if pd.isna(value):
         return ""
-    value = str(value).strip()
-    return re.sub(r"\s+", " ", value)
+    return str(value).strip()
 
 
-def find_header_bounds(df):
-    first_target = normalize_header_value(FIRST_HEADER)
+def find_column(normalized_row, *keywords):
+    """Return the index of the first cell in this header row whose
+    (lowercased) text contains any of the given keywords. Real header
+    cells are short labels; long sentences (like the Salesforce filter
+    description, which can also contain these words) are skipped."""
+    for column_number, value in enumerate(normalized_row):
+        if len(value) > 60:
+            continue
+        value_lower = value.lower()
+        for keyword in keywords:
+            if keyword in value_lower:
+                return column_number
+    return None
 
+
+def find_header_row(df):
+    """Locate the row containing the Campaign Source column and return
+    that row number plus the column index for every field we need,
+    regardless of ordering or gaps between them."""
     for row_number, row in df.iterrows():
         normalized_row = [normalize_header_value(v) for v in row]
 
-        if first_target in normalized_row:
-            first_column_number = normalized_row.index(first_target)
+        campaign_col = find_column(normalized_row, "campaign source")
+        if campaign_col is None:
+            continue
 
-            # Scan rightward for the extent of the header row. Allow
-            # skipping exactly one blank spacer column without stopping
-            # (these reports always have one between the campaign source
-            # column and the rest), so we don't need to know the exact
-            # name of the last column.
-            last_column_number = first_column_number
-            blank_run = 0
+        amount_col = find_column(normalized_row, "payment amount", "amount received")
+        date_col = find_column(normalized_row, "close date", "payment date")
+        city_col = find_column(normalized_row, "city")
+        state_col = find_column(normalized_row, "state", "province")
+        zip_col = find_column(normalized_row, "zip", "postal")
 
-            for column_number in range(first_column_number, len(normalized_row)):
-                value_clean = normalized_row[column_number]
+        found = {
+            "Campaign Source": campaign_col,
+            "Payment Amount": amount_col,
+            "Date": date_col,
+            "City": city_col,
+            "State": state_col,
+            "Zipcode": zip_col,
+        }
 
-                if value_clean == "":
-                    blank_run += 1
-                    if blank_run > 1:
-                        break
-                    continue
+        missing = [name for name, col in found.items() if col is None]
+        if missing:
+            raise ValueError(
+                f"Found the header row (Campaign Source at column {campaign_col}) "
+                f"but could not find a column for: {', '.join(missing)}. "
+                f"Header row contents: {normalized_row}"
+            )
 
-                blank_run = 0
-                last_column_number = column_number
-
-            return row_number, first_column_number, last_column_number
+        return row_number, found
 
     raise ValueError(
-        f"Could not find a header row starting with column '{FIRST_HEADER}'."
+        "Could not find a header row containing a 'Campaign Source' column."
     )
-
-
-def find_fuzzy_column(columns, *keywords):
-    """Find the first column whose (lowercased) name contains any of the
-    given keywords -- lets us match 'Mailing City', 'Billing City', or
-    just 'City' without needing an exact name."""
-    for column in columns:
-        column_lower = column.lower()
-        for keyword in keywords:
-            if keyword in column_lower:
-                return column
-    return None
 
 
 def clean_geography_and_time_dataframe(input_path):
     input_path = Path(input_path)
 
-    df = pd.read_excel(input_path, sheet_name=0, header=None)
+    raw = pd.read_excel(input_path, sheet_name=0, header=None)
 
-    header_row_number, first_column_number, last_column_number = find_header_bounds(df)
+    header_row_number, columns = find_header_row(raw)
 
-    df = df.iloc[header_row_number:, first_column_number:last_column_number + 1]
-    df = df.reset_index(drop=True)
+    data = raw.iloc[header_row_number + 1:].reset_index(drop=True)
 
-    df.columns = [normalize_header_value(value) for value in df.iloc[0]]
-    df = df.iloc[1:].reset_index(drop=True)
+    df = pd.DataFrame({
+        name: data.iloc[:, col_index]
+        for name, col_index in columns.items()
+    })
 
     df = df.replace(r"^\s*$", pd.NA, regex=True)
     df = df.dropna(axis=0, how="all")
@@ -109,41 +114,6 @@ def clean_multiple_geography_and_time_imports(input_paths, output_path):
         raise ValueError("No files were provided.")
 
     df = pd.concat(cleaned_dataframes, ignore_index=True)
-
-    df = df.loc[:, df.columns != ""]
-
-    city_column = find_fuzzy_column(df.columns, "city")
-    state_column = find_fuzzy_column(df.columns, "state", "province")
-    zip_column = find_fuzzy_column(df.columns, "zip", "postal")
-
-    rename_map = {"Primary Campaign Source ↑": "Campaign Source"}
-
-    for column in df.columns:
-        column_lower = column.lower()
-        if "payment amount" in column_lower or column_lower == "amount":
-            rename_map[column] = "Payment Amount"
-        elif "close date" in column_lower or column_lower == "date":
-            rename_map[column] = "Date"
-
-    if city_column:
-        rename_map[city_column] = "City"
-    if state_column:
-        rename_map[state_column] = "State"
-    if zip_column:
-        rename_map[zip_column] = "Zipcode"
-
-    missing = [
-        name for name, found in
-        [("City", city_column), ("State", state_column), ("Zipcode", zip_column)]
-        if not found
-    ]
-    if missing:
-        raise ValueError(
-            f"Could not find a column for: {', '.join(missing)}. "
-            f"Columns found in file: {list(df.columns)}"
-        )
-
-    df = df.rename(columns=rename_map)
 
     # "Campaign Source" is the Salesforce grouped-report column -- only
     # populated on the first row of each campaign group, blank on the rest.
