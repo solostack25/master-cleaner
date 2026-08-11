@@ -288,8 +288,18 @@ def clean_multiple_hunger_prevention_imports(input_files, input_filenames, outpu
     registered_clients_df["Region"] = registered_clients_df["State"].map(geography_maps.state_to_region)
     bulk_df["Region"] = bulk_df["State"].map(geography_maps.state_to_region)
     cash_df["Region"] = cash_df["State"].map(geography_maps.state_to_region)
-    in_kind_df.columns = in_kind_df.columns.str.strip().str.title()
-    irfas_df.columns = irfas_df.columns.str.strip().str.title()
+    in_kind_df.columns = (
+        in_kind_df.columns.str.replace("↑", "", regex=False)
+        .str.replace("↓", "", regex=False)
+        .str.strip()
+        .str.title()
+    )
+    irfas_df.columns = (
+        irfas_df.columns.str.replace("↑", "", regex=False)
+        .str.replace("↓", "", regex=False)
+        .str.strip()
+        .str.title()
+    )
 
     if "Program" not in in_kind_df.columns:
         raise ValueError(
