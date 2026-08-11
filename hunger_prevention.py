@@ -312,6 +312,15 @@ def clean_multiple_hunger_prevention_imports(input_files, input_filenames, outpu
             f"Columns found: {', '.join(irfas_df.columns)}"
         )
 
+    if "Location" not in in_kind_df.columns and "Icna Relief Office: Account Name" in in_kind_df.columns:
+        in_kind_df = in_kind_df.rename(columns={"Icna Relief Office: Account Name": "Location"})
+
+    if "Location" not in in_kind_df.columns:
+        raise ValueError(
+            "Your In-Kind file doesn't have a 'Location' or 'ICNA Relief Office: "
+            f"Account Name' column. Columns found: {', '.join(in_kind_df.columns)}"
+        )
+
     in_kind_df["Region"] = in_kind_df["Region"].str.title()
 
     # Assign RSN
