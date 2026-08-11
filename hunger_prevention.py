@@ -143,7 +143,7 @@ def save_hunger_prevention_starter_workbook(df1, output_path):
 def zero_value_rows(df):
     new_dfs = []
 
-    distribution_types = ["IRFAS", "In-Kind", "Cash", "Registered Clients", "Bulk"]
+    distribution_types = ["IRFAS", "IN-KIND", "CASH", "REGISTERED CLIENTS", "BULK"]
 
     first_columns = ["Year", "Quarter", "Month Name", "Month Number", "Date", "Region", "Chapter", "State",
                      "Field Office", "Region Number", "City", "Zipcode", "Location", "Distribution Type"]
@@ -366,23 +366,112 @@ def clean_multiple_hunger_prevention_imports(input_files, input_filenames, outpu
     irfas_df = irfas_df[irfas_df["Program"] == "HP"]
     in_kind_df = in_kind_df[in_kind_df["Program"] == "Hunger Prevention"]
 
-    in_kind_df = in_kind_df[["Year", "Quarter", "Month Name", "Month Number", "Region", "Chapter", "State",
-                            "Field Office", "Region Number", "Location", "Total Value Of Articles"]]
-    irfas_df = irfas_df[["Year", "Quarter", "Month Name", "Month Number", "Region", "Chapter", "State", "Field Office",
-                         "Region Number", "City", "Amount Approved"]]
+    # ------------------------------------------------------------
+    # Consolidate each source's own food/value columns into the shared
+    # target schema (matches HP_PowerBi.xlsx). Each source only fills in
+    # the columns it actually has data for -- the rest stay blank/0 for
+    # that row, which is exactly the sparsity pattern the reference file
+    # already has.
+    # ------------------------------------------------------------
 
-    # Distribution Type
-    in_kind_df["Distribution Type"] = "In-Kind"
+    registered_clients_df = registered_clients_df.rename(columns={
+        "Sum of Food Delivered in lbs": "Grocery Weight",
+        "Sum of Fish Delivered in lbs": "Fish Weight",
+        "Sum of Meat Delivered in lbs": "Meat Weight",
+        "Sum of Poultry Delivered in lbs": "Poultry Weight",
+        "Total Groceries Value": "Grocery Value",
+        "Poultry Total": "Poultry Value",
+        "Meat Total Value": "Meat Value",
+        "Fish Total": "Fish Value",
+    })
+    registered_clients_df["Individuals Served"] = (
+        registered_clients_df.get("Sum of No. Of Adults", 0).fillna(0)
+        + registered_clients_df.get("Sum of No. Of Children (0–5 years)", 0).fillna(0)
+        + registered_clients_df.get("Sum of No. Of Children (6–18 years)", 0).fillna(0)
+        + registered_clients_df.get("Sum of No. Of Seniors", 0).fillna(0)
+    )
+
+    bulk_df = bulk_df.rename(columns={
+        "No of People Served": "Individuals Served",
+        "Total Baby Formula": "Baby Formula",
+        "Total Fish in lbs": "Fish Weight",
+        "Total Groceries in lbs": "Grocery Weight",
+        "Total Meat in lbs": "Meat Weight",
+        "Total Poultry in lbs": "Poultry Weight",
+        "Total Prepared Meals": "Number of Prepared Meals",
+        "Total Produce in lbs": "Produce Weight",
+        "Total Qurbani Meat in lbs": "Qurbani Meat Weight",
+        "Total Ramadan Food Boxes": "Ramadan Food Boxes",
+        "Total Baby Formula Value": "Baby Formula Value",
+        "Total Fish Value": "Fish Value",
+        "Total Meat Value": "Meat Value",
+        "Total Poultry Value": "Poultry Value",
+        "Total Groceries Value": "Grocery Value",
+        "Total Prepared Meals Value": "Prepared Meal Value",
+        "Total Produce Value": "Produce Value",
+        "Total Qurbani Meat Value": "Qurbani Meat Value",
+        "Total Ramadan Food Boxes Value": "Ramadan Food Box Value",
+    })
+
+    cash_df = cash_df.rename(columns={"Payment Amount Received": "Cash Donation"})
+
+    in_kind_df = in_kind_df.rename(columns={"Total Value Of Articles": "Inkind Donation"})
+
+    irfas_df = irfas_df.rename(columns={"Amount Approved": "Total Value of All Food"})
+    # Household-size assumption for IRFAS financial assistance cases --
+    # confirmed against HP_PowerBi.xlsx (every real IRFAS row uses 5,
+    # zero-padding rows use 0). Flag to Travis if this should change.
+    irfas_df["Individuals Served"] = 5
+
+    in_kind_df = in_kind_df[["Year", "Quarter", "Month Name", "Month Number", "Region", "Chapter", "State",
+                            "Field Office", "Region Number", "Location", "Inkind Donation"]]
+    irfas_df = irfas_df[["Year", "Quarter", "Month Name", "Month Number", "Region", "Chapter", "State", "Field Office",
+                         "Region Number", "City", "Total Value of All Food", "Individuals Served"]]
+
+    # Distribution Type (upper case, matching HP_PowerBi.xlsx exactly)
+    in_kind_df["Distribution Type"] = "IN-KIND"
     irfas_df["Distribution Type"] = "IRFAS"
-    registered_clients_df["Distribution Type"] = "Registered Clients"
-    bulk_df["Distribution Type"] = "Bulk"
-    cash_df["Distribution Type"] = "Cash"
+    registered_clients_df["Distribution Type"] = "REGISTERED CLIENTS"
+    bulk_df["Distribution Type"] = "BULK"
+    cash_df["Distribution Type"] = "CASH"
 
     # Put all 5 of your DataFrames into a list
     list_of_dataframes = [registered_clients_df, bulk_df, cash_df, in_kind_df, irfas_df]
 
     # Combine them vertically
     hunger_prevention_df = pd.concat(list_of_dataframes, axis=0, ignore_index=True)
+
+    # Roll-up calculated columns, computed after the concat so they see
+    # every source's contribution to a shared column at once.
+    def _sum_cols(df, columns):
+        total = 0
+        for column in columns:
+            if column in df.columns:
+                total = total + df[column].fillna(0)
+        return total
+
+    hunger_prevention_df["All Meat Weight"] = _sum_cols(
+        hunger_prevention_df, ["Fish Weight", "Meat Weight", "Poultry Weight"]
+    )
+    hunger_prevention_df["All Meat Value"] = _sum_cols(
+        hunger_prevention_df, ["Fish Value", "Meat Value", "Poultry Value"]
+    )
+    hunger_prevention_df["Total Weight"] = _sum_cols(
+        hunger_prevention_df,
+        ["Grocery Weight", "All Meat Weight", "Produce Weight", "Qurbani Meat Weight"]
+    )
+
+    if "Total Value of All Food" not in hunger_prevention_df.columns:
+        hunger_prevention_df["Total Value of All Food"] = 0
+    hunger_prevention_df["Total Value of All Food"] = hunger_prevention_df["Total Value of All Food"].fillna(0) + _sum_cols(
+        hunger_prevention_df,
+        ["Grocery Value", "All Meat Value", "Produce Value", "Qurbani Meat Value",
+         "Prepared Meal Value", "Ramadan Food Box Value", "Baby Formula Value"]
+    )
+
+    hunger_prevention_df["Total Donations"] = _sum_cols(
+        hunger_prevention_df, ["Inkind Donation", "Cash Donation"]
+    )
 
     # Capitalizes and orders columns
     first_columns = ["Year", "Quarter", "Month Name", "Month Number", "Date", "Region", "Chapter", "State",
@@ -393,6 +482,23 @@ def clean_multiple_hunger_prevention_imports(input_files, input_filenames, outpu
     ]
 
     hunger_prevention_df = hunger_prevention_df[first_columns + remaining_columns]
+
+    # Rename to match HP_PowerBi.xlsx's exact naming conventions
+    hunger_prevention_df = hunger_prevention_df.rename(columns={
+        "Location": "Distribution Location",
+        "Month Name": "Month",
+        "Month Number": "MSN",
+        "Region Number": "RSN",
+    })
+
+    # These are always blank in HP_PowerBi.xlsx in our zero-padding rows,
+    # and Brick & Mortar Pantry's real-data population rule couldn't be
+    # reliably reverse-engineered from the reference file (see note to
+    # Travis) -- included here so the output has the same column
+    # structure either way.
+    hunger_prevention_df["Mobile Pantry"] = pd.NA
+    hunger_prevention_df["Dietry Restrictions"] = pd.NA
+    hunger_prevention_df["Brick & Mortar Pantry"] = pd.NA
 
     hunger_prevention_df = zero_value_rows(hunger_prevention_df)
 
