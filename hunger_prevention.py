@@ -374,8 +374,9 @@ def clean_multiple_hunger_prevention_imports(input_files, input_filenames, outpu
 
     # Only grabs the needed columns and rows
     # axis=1 targets columns; how='all' drops them only if EVERY value is missing
-    bulk_df = bulk_df.drop(columns=[""])
-    cash_df = cash_df.drop(columns=[""])
+    # errors='ignore' since not every raw export leaves behind a blank spacer column
+    bulk_df = bulk_df.drop(columns=[""], errors="ignore")
+    cash_df = cash_df.drop(columns=[""], errors="ignore")
 
     years_in_data = cash_df["Year"].dropna().unique()
     in_kind_df = in_kind_df[in_kind_df["Year"].isin(years_in_data)]

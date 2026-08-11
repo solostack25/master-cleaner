@@ -17,12 +17,19 @@ from revenue_cleaner import clean_multiple_revenue_imports
 from current_revenue import clean_multiple_current_revenue_imports
 from hunger_prevention import clean_multiple_hunger_prevention_imports
 from refugee_services import clean_multiple_refugee_services_imports
+from geography_and_time_cleaner import clean_multiple_geography_and_time_imports
 from admin_geography import router as admin_geography_router
+import supabase_client
 from theme import page_shell, THEME_CSS
 
 
 app = FastAPI()
 app.include_router(admin_geography_router)
+
+
+@app.exception_handler(supabase_client.SupabaseConnectionError)
+async def supabase_connection_error_handler(request: Request, exc: supabase_client.SupabaseConnectionError):
+    return HTMLResponse(error_page_html(str(exc)), status_code=502)
 
 # ------------------------------------------------------------
 # ENVIRONMENT / SECURITY SETTINGS
@@ -136,7 +143,8 @@ ALLOWED_REPORT_TYPES = {
     "expenditure",
     "in_kind_donations",
     "current_revenue",
-    "refugee_services"
+    "refugee_services",
+    "geography_and_time"
 }
 
 
@@ -241,6 +249,7 @@ def cleaner_page_html() -> str:
                     <option value="expenditure">Expenditure</option>
                     <option value="hunger_prevention">Hunger Prevention</option>
                     <option value="refugee_services">Refugee Services</option>
+                    <option value="geography_and_time">Geography and Time Cleaner</option>
                     <option value="in_kind_donations">In-Kind Donations</option>
                     <option value="irfas">IRFAS</option>
                     <option value="revenue">Revenue</option>
@@ -471,6 +480,30 @@ def cleaner_page_html() -> str:
                             5. IRFAS: <strong>irfas.xlsx</strong>
                             <br><br>
                             File names are <strong>NOT</strong> case sensitive.
+                        </p>
+                    </div>
+
+                    <div id="instructions_geography_and_time" class="cleaner-instructions instructions" style="display: none;">
+                        <p>
+                            <strong>Special Instructions for Geography and Time Cleaner Uploads:</strong>
+                            <br><br>
+                            Export a "Donations by Campaign" style report from Salesforce with the following columns:
+                            <br><br>
+                            <strong>Primary Campaign Source</strong>
+                            <br>
+                            <strong>Payment Amount Received</strong>
+                            <br>
+                            <strong>Close Date</strong>
+                            <br>
+                            <strong>Mailing City</strong>
+                            <br>
+                            <strong>Mailing State/Province</strong>
+                            <br>
+                            <strong>Mailing Zip/Postal Code</strong>
+                            <br><br>
+                            You can upload multiple files at once. Each row will be assigned a Region, RSN,
+                            Chapter, Field Office, Year, Quarter, and Month based on the zip code and city
+                            on file.
                         </p>
                     </div>
 
@@ -846,6 +879,8 @@ def clean_uploaded_file(
         clean_multiple_hunger_prevention_imports(input_paths, original_filenames,output_path)
     elif report_type == "refugee_services":
         clean_multiple_refugee_services_imports(input_paths, original_filenames, output_path)
+    elif report_type == "geography_and_time":
+        clean_multiple_geography_and_time_imports(input_paths, output_path)
     else:
         # Temporary fallback for other report types.
         # These will eventually be replaced with their own multi-file cleaner functions.

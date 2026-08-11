@@ -134,17 +134,25 @@ def list_rsn(request: Request, saved: str = ""):
     if not _authed(request):
         return _login_redirect()
 
-    rows = sorted(supabase_client.fetch_all("geo_region_to_rsn"), key=lambda r: r["rsn"])
+    def _sort_key(row):
+        try:
+            return (0, int(row["rsn"]))
+        except (TypeError, ValueError, KeyError):
+            return (1, 0)  # blank/non-numeric RSNs sort last instead of crashing
+
+    rows = sorted(supabase_client.fetch_all("geo_region_to_rsn"), key=_sort_key)
 
     rows_html = ""
     for r in rows:
+        rsn_value = r.get("rsn")
+        rsn_display = "" if rsn_value is None else rsn_value
         rows_html += f"""
         <tr>
             <form method="post" action="/admin/geography/rsn/update">
                 <td>{r['region']}</td>
                 <td>
                     <input type="hidden" name="region" value="{r['region']}">
-                    <input type="text" name="rsn" value="{r['rsn']}">
+                    <input type="text" name="rsn" value="{rsn_display}">
                 </td>
                 <td><button class="save-btn" type="submit">Save</button></td>
             </form>
@@ -166,11 +174,19 @@ def list_rsn(request: Request, saved: str = ""):
 
 
 @router.post("/admin/geography/rsn/update")
-def update_rsn(request: Request, region: str = Form(...), rsn: int = Form(...)):
+def update_rsn(request: Request, region: str = Form(...), rsn: str = Form(...)):
     if not _authed(request):
         return _login_redirect()
 
-    supabase_client.update_row("geo_region_to_rsn", "region", region, {"rsn": rsn})
+    try:
+        rsn_value = int(rsn)
+    except ValueError:
+        return RedirectResponse(
+            url=f"/admin/geography/rsn?saved=RSN+must+be+a+whole+number+-+got+%22{rsn}%22",
+            status_code=303,
+        )
+
+    supabase_client.update_row("geo_region_to_rsn", "region", region, {"rsn": rsn_value})
     geography_maps.refresh_geo_cache()
     return RedirectResponse(url="/admin/geography/rsn?saved=Saved", status_code=303)
 
