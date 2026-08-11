@@ -288,8 +288,20 @@ def clean_multiple_hunger_prevention_imports(input_files, input_filenames, outpu
     registered_clients_df["Region"] = registered_clients_df["State"].map(geography_maps.state_to_region)
     bulk_df["Region"] = bulk_df["State"].map(geography_maps.state_to_region)
     cash_df["Region"] = cash_df["State"].map(geography_maps.state_to_region)
-    in_kind_df.columns = in_kind_df.columns.str.title()
-    irfas_df.columns = irfas_df.columns.str.title()
+    in_kind_df.columns = in_kind_df.columns.str.strip().str.title()
+    irfas_df.columns = irfas_df.columns.str.strip().str.title()
+
+    if "Program" not in in_kind_df.columns:
+        raise ValueError(
+            "Your In-Kind file doesn't have a 'Program' column. "
+            f"Columns found: {', '.join(in_kind_df.columns)}"
+        )
+    if "Program" not in irfas_df.columns:
+        raise ValueError(
+            "Your IRFAS file doesn't have a 'Program' column. "
+            f"Columns found: {', '.join(irfas_df.columns)}"
+        )
+
     in_kind_df["Region"] = in_kind_df["Region"].str.title()
 
     # Assign RSN
