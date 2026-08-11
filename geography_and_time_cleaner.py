@@ -4,90 +4,20 @@ import pandas as pd
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 import geography_maps
+import column_finder as cf
 
-
-def normalize_header_value(value):
-    if pd.isna(value):
-        return ""
-    return str(value).strip()
-
-
-def find_column(normalized_row, *keywords):
-    """Return the index of the first cell in this header row whose
-    (lowercased) text contains any of the given keywords. Real header
-    cells are short labels; long sentences (like the Salesforce filter
-    description, which can also contain these words) are skipped."""
-    for column_number, value in enumerate(normalized_row):
-        if len(value) > 60:
-            continue
-        value_lower = value.lower()
-        for keyword in keywords:
-            if keyword in value_lower:
-                return column_number
-    return None
-
-
-def find_header_row(df):
-    """Locate the header row by finding the 5 fields this cleaner actually
-    needs (amount, date, city, state, zip) all present in the same row,
-    regardless of column order or gaps between them. The campaign/grouping
-    column (labeled differently across export variants -- "Primary
-    Campaign Source", "Subheads", etc.) is matched separately and is
-    optional, since it's just a label, not something geography/time
-    assignment depends on."""
-    for row_number, row in df.iterrows():
-        normalized_row = [normalize_header_value(v) for v in row]
-
-        amount_col = find_column(normalized_row, "payment amount", "amount received", "amount")
-        date_col = find_column(normalized_row, "close date", "payment date", "date")
-        city_col = find_column(normalized_row, "city")
-        state_col = find_column(normalized_row, "state", "province")
-        zip_col = find_column(normalized_row, "zip", "postal")
-
-        found = {
-            "Payment Amount": amount_col,
-            "Date": date_col,
-            "City": city_col,
-            "State": state_col,
-            "Zipcode": zip_col,
-        }
-
-        if any(col is None for col in found.values()):
-            continue
-
-        # Campaign/grouping column is optional -- try several known labels.
-        campaign_col = find_column(
-            normalized_row, "campaign source", "subhead", "campaign name", "campaign"
-        )
-        found["Campaign Source"] = campaign_col
-
-        return row_number, found
-
-    raise ValueError(
-        "Could not find a header row containing columns for amount, date, "
-        "city, state, and zip."
-    )
+COLUMN_SPECS = {
+    "Payment Amount": (("payment amount", "amount received", "amount"), True),
+    "Date": (("close date", "payment date", "date"), True),
+    "City": (("city",), True),
+    "State": (("state", "province"), True),
+    "Zipcode": (("zip", "postal"), True),
+    "Campaign Source": (("campaign source", "subhead", "campaign name", "campaign"), False),
+}
 
 
 def clean_geography_and_time_dataframe(input_path):
-    input_path = Path(input_path)
-
-    raw = pd.read_excel(input_path, sheet_name=0, header=None)
-
-    header_row_number, columns = find_header_row(raw)
-
-    data = raw.iloc[header_row_number + 1:].reset_index(drop=True)
-
-    df = pd.DataFrame({
-        name: (data.iloc[:, col_index] if col_index is not None else pd.NA)
-        for name, col_index in columns.items()
-    })
-
-    df = df.replace(r"^\s*$", pd.NA, regex=True)
-    df = df.dropna(axis=0, how="all")
-    df = df.reset_index(drop=True)
-
-    return df
+    return cf.clean_export(input_path, COLUMN_SPECS)
 
 
 def save_geography_and_time_workbook(df, output_path):

@@ -5,6 +5,7 @@ import pandas as pd
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 import geography_maps
+import column_finder as cf
 
 FIRST_REVENUE_HEADER = "Contact: Mailing State/Province ↓"
 
@@ -53,69 +54,13 @@ def save_revenue_workbook(cleaned_revenue_df, total_revenue_df, community_revenu
 
     workbook.save(output_path)
 
-def find_revenue_header_bounds(df):
-    first_header_clean = normalize_header_value(FIRST_REVENUE_HEADER)
-
-    for row_number, row in df.iterrows():
-        first_column_number = None
-
-        for column_number, value in enumerate(row):
-            value_clean = normalize_header_value(value)
-
-            if value_clean == first_header_clean:
-                first_column_number = column_number
-                break
-
-        if first_column_number is not None:
-            last_column_number = first_column_number
-
-            for column_number in range(first_column_number, len(row)):
-                if column_number == (first_column_number + 2):
-                    continue
-                value_clean = normalize_header_value(row.iloc[column_number])
-
-                if value_clean == "":
-                    break
-
-                last_column_number = column_number
-
-            return row_number, first_column_number, last_column_number
-
-    raise ValueError(
-        "Could not find the revenue header row. "
-        f"Expected first column '{FIRST_REVENUE_HEADER}'."
-    )
-
 def clean_revenue_dataframe(input_path):
     input_path = Path(input_path)
 
-    df = pd.read_excel(
-        input_path,
-        sheet_name=0,
-        header=None
-    )
+    anchor_keyword = normalize_header_value(FIRST_REVENUE_HEADER).lower()
+    anchor_keyword = anchor_keyword.replace("↑", "").replace("↓", "").strip()
 
-    header_row_number, first_column_number, last_column_number = find_revenue_header_bounds(df)
-
-    df = df.iloc[
-        header_row_number:,
-        first_column_number:last_column_number + 1
-    ]
-
-    df = df.reset_index(drop=True)
-
-    df.columns = [
-        normalize_header_value(value)
-        for value in df.iloc[0]
-    ]
-
-    df = df.iloc[1:]
-    df = df.reset_index(drop=True)
-
-    df = df.replace(r"^\s*$", pd.NA, regex=True)
-
-    df = df.dropna(axis=0, how="all")
-    df = df.reset_index(drop=True)
+    df = cf.clean_export_range(input_path, (anchor_keyword,), max_blank_run=2)
 
     return df
 

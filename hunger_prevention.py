@@ -4,6 +4,7 @@ import pandas as pd
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 import geography_maps
+import column_finder as cf
 
 HUNGER_PREVENTION_FILENAME_LOOKUP = {
     "reg_clients": "registered_clients",
@@ -72,70 +73,19 @@ def normalize_header_value(value):
 
     return value
 
-def find_header_bounds(df, first_column_name):
-    first_header_clean = normalize_header_value(first_column_name)
-
-    for row_number, row in df.iterrows():
-        first_column_number = None
-
-        for column_number, value in enumerate(row):
-            value_clean = normalize_header_value(value)
-
-            if value_clean == first_header_clean:
-                first_column_number = column_number
-                break
-
-        if first_column_number is not None:
-            last_column_number = first_column_number
-
-            for column_number in range(first_column_number, len(row)):
-                value_clean = normalize_header_value(row.iloc[column_number])
-
-                if (column_number == 2) and (first_column_name != "State  ↑"):
-                    continue
-
-                if value_clean == "":
-                    break
-
-                last_column_number = column_number
-
-            return row_number, first_column_number, last_column_number
-
-    raise ValueError("Could not find the file's header row. Expected first column", first_column_name)
-
 def clean_dataframe(input_path, first_column_name):
-    input_path = Path(input_path)
+    """Kept as a thin wrapper for backwards compatibility with existing
+    call sites -- first_column_name is now used as a keyword search
+    (case/whitespace-insensitive substring match) rather than an exact
+    string match, and the header-range detection tolerates blank gaps
+    anywhere instead of assuming a specific column position is the one
+    that's allowed to be empty (that assumption caused real failures)."""
+    anchor_keyword = normalize_header_value(first_column_name).lower()
+    # Strip the trailing arrow character some of these Salesforce columns
+    # have (e.g. "State  ↑") since it's not a reliable keyword to match on.
+    anchor_keyword = anchor_keyword.replace("↑", "").replace("↓", "").strip()
 
-    df = pd.read_excel(
-        input_path,
-        sheet_name=0,
-        header=None
-    )
-
-    header_row_number, first_column_number, last_column_number = find_header_bounds(df, first_column_name)
-    print(first_column_number, last_column_number, first_column_name)
-
-    df = df.iloc[
-        header_row_number:,
-        first_column_number:last_column_number + 1
-    ]
-
-    df = df.reset_index(drop=True)
-
-    df.columns = [
-        normalize_header_value(value)
-        for value in df.iloc[0]
-    ]
-
-    df = df.iloc[1:]
-    df = df.reset_index(drop=True)
-
-    df = df.replace(r"^\s*$", pd.NA, regex=True)
-
-    df = df.dropna(axis=0, how="all")
-    df = df.reset_index(drop=True)
-
-    return df
+    return cf.clean_export_range(input_path, (anchor_keyword,), max_blank_run=2)
 
 
 def validate_hunger_prevention_uploads(input_files, input_filenames):

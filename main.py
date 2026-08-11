@@ -853,39 +853,51 @@ def clean_uploaded_file(
     # ROUTE FILES TO THE CORRECT CLEANER
     # --------------------------------------------------------
 
-    if report_type == "in_kind_donations":
-        clean_multiple_in_kind_donations(input_paths, output_path)
-    elif report_type == "irfas":
-        clean_irfas(input_paths[0], output_path)
-    elif report_type == "volunteers":
-        clean_volunteers(input_paths[0], output_path)
-    elif report_type == "expenditure":
-        if not report_month:
-            return HTMLResponse(
-                content=error_page_html("Please select the expenditure month."),
-                status_code=400
-            )
+    try:
+        if report_type == "in_kind_donations":
+            clean_multiple_in_kind_donations(input_paths, output_path)
+        elif report_type == "irfas":
+            clean_irfas(input_paths[0], output_path)
+        elif report_type == "volunteers":
+            clean_volunteers(input_paths[0], output_path)
+        elif report_type == "expenditure":
+            if not report_month:
+                return HTMLResponse(
+                    content=error_page_html("Please select the expenditure month."),
+                    status_code=400
+                )
 
-        clean_expenditure(
-            input_paths[0],
-            output_path,
-            report_month
+            clean_expenditure(
+                input_paths[0],
+                output_path,
+                report_month
+            )
+        elif report_type == "revenue":
+            clean_multiple_revenue_imports(input_paths, output_path)
+        elif report_type == "current_revenue":
+            clean_multiple_current_revenue_imports(input_paths, original_filenames, output_path)
+        elif report_type == "hunger_prevention":
+            clean_multiple_hunger_prevention_imports(input_paths, original_filenames,output_path)
+        elif report_type == "refugee_services":
+            clean_multiple_refugee_services_imports(input_paths, original_filenames, output_path)
+        elif report_type == "geography_and_time":
+            clean_multiple_geography_and_time_imports(input_paths, output_path)
+        else:
+            # Temporary fallback for other report types.
+            # These will eventually be replaced with their own multi-file cleaner functions.
+            # For now, just copy the first uploaded file.
+            shutil.copy(input_paths[0], output_path)
+    except supabase_client.SupabaseConnectionError:
+        raise
+    except Exception as error:
+        for input_path in input_paths:
+            background_tasks.add_task(safe_delete_file, input_path)
+        return HTMLResponse(
+            content=error_page_html(
+                f"The cleaner couldn't process your file(s): {error}"
+            ),
+            status_code=400
         )
-    elif report_type == "revenue":
-        clean_multiple_revenue_imports(input_paths, output_path)
-    elif report_type == "current_revenue":
-        clean_multiple_current_revenue_imports(input_paths, original_filenames, output_path)
-    elif report_type == "hunger_prevention":
-        clean_multiple_hunger_prevention_imports(input_paths, original_filenames,output_path)
-    elif report_type == "refugee_services":
-        clean_multiple_refugee_services_imports(input_paths, original_filenames, output_path)
-    elif report_type == "geography_and_time":
-        clean_multiple_geography_and_time_imports(input_paths, output_path)
-    else:
-        # Temporary fallback for other report types.
-        # These will eventually be replaced with their own multi-file cleaner functions.
-        # For now, just copy the first uploaded file.
-        shutil.copy(input_paths[0], output_path)
 
     # After the response is sent, delete all uploaded files and the output file.
     for input_path in input_paths:
