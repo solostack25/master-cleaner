@@ -134,6 +134,50 @@ def normalize_rs_filename(original_filename):
     return file_stem, file_extension
 
 
+def detect_rs_file_type_by_content(input_path):
+    """Fallback for when a file's name doesn't match the expected patterns
+    -- figures out which of the 5 Refugee Services file types this is by
+    looking at its actual columns instead of its filename."""
+    # Case Management: has a "Delivery Date" through "# of Beneficiaries" header row.
+    try:
+        read_rs_sheet(input_path, "Delivery Date ↑", "# of Beneficiaries")
+        return "case_management"
+    except ValueError:
+        pass
+
+    # Bulk: has "ICNA Relief Office: Account Name" through "No of People Served".
+    try:
+        read_rs_sheet(input_path, "ICNA Relief Office: Account Name ↑", "No of People Served")
+        return "bulk"
+    except ValueError:
+        pass
+
+    # Cash: has "Primary Campaign Source" through a Billing Zip column.
+    try:
+        read_rs_sheet(input_path, "Primary Campaign Source ↑", "Billing Zip/Postal Code")
+        return "cash"
+    except ValueError:
+        pass
+
+    # In-Kind and IRFAS are plain, already-headered exports -- tell them
+    # apart by which distinctive column each one has.
+    try:
+        df = pd.read_excel(input_path, sheet_name=0, nrows=1)
+        columns_upper = [str(c).strip().upper() for c in df.columns]
+
+        has_total_value_of_articles = any("TOTAL VALUE OF ARTICLES" in c for c in columns_upper)
+        has_amount_approved = any("AMOUNT APPROVED" in c for c in columns_upper)
+
+        if has_total_value_of_articles and not has_amount_approved:
+            return "in_kind"
+        if has_amount_approved and not has_total_value_of_articles:
+            return "irfas"
+    except Exception:
+        pass
+
+    return None
+
+
 def parse_rs_filename(original_filename):
     file_stem, file_extension = normalize_rs_filename(original_filename)
 
@@ -157,7 +201,20 @@ def validate_rs_uploads(input_files, input_filenames):
 
     for file_num, file_info in enumerate(input_files):
         original_filename = input_filenames[file_num]
-        file_type = parse_rs_filename(original_filename)
+
+        try:
+            file_type = parse_rs_filename(original_filename)
+        except ValueError:
+            # Filename didn't match -- fall back to figuring out what this
+            # file actually is by looking at its columns.
+            file_type = detect_rs_file_type_by_content(file_info)
+            if file_type is None:
+                raise ValueError(
+                    f"Could not recognize Refugee Services file: {original_filename}. "
+                    "Its name doesn't match a known pattern (cash, bulk, in_kind, "
+                    "irfas, case_management), and its columns didn't match any "
+                    "of the 5 expected file types either."
+                )
 
         if file_type in recognized_files:
             display_name = RS_DISPLAY_NAMES[file_type]
