@@ -4,6 +4,7 @@ import pandas as pd
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 import geography_maps
+import column_finder as cf
 
 
 def _normalize_header(value):
@@ -327,15 +328,22 @@ def clean_case_management(input_path):
     return out
 
 
-def clean_cash(input_path):
-    df = read_rs_sheet(input_path, "Primary Campaign Source ↑", "Billing Zip/Postal Code")
+CASH_COLUMN_SPECS = {
+    "Campaign Source": (("campaign source",), True),
+    "Payment Amount Received": (("payment amount", "amount received"), True),
+    "Date": (("close date", "payment date", "date"), True),
+    "City": (("city",), True),
+    "State": (("state", "province"), True),
+    "Zipcode": (("zip", "postal"), True),
+}
 
-    df = df.rename(columns={
-        "Billing State/Province": "State",
-        "Billing City": "City",
-        "Billing Zip/Postal Code": "Zipcode",
-        "Close Date": "Date",
-    })
+
+def clean_cash(input_path):
+    df = cf.clean_export(input_path, CASH_COLUMN_SPECS)
+
+    # "Campaign Source" is the Salesforce grouped-report column -- only
+    # populated on the first row of each campaign group, blank on the rest.
+    df["Campaign Source"] = df["Campaign Source"].ffill()
 
     df["State"] = df["State"].astype(str).str.upper()
     df["Zipcode"] = df["Zipcode"].astype(str).str.extract(r"(\d{1,5})")[0].str.zfill(5)
