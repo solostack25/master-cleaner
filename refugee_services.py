@@ -290,10 +290,9 @@ def clean_case_management(input_path):
         ),
         axis=1,
     )
+    df["Region"] = df["Region"].str.upper()
 
     df = geography_maps._add_date_columns(df)
-
-    df["Client Country of Origin"] = df["Client Country of Origin"].fillna("Not Provided")
     df["Client Ethnicity"] = df["Client Ethnicity"].fillna("Not Provided")
     df["Total Value of Services Provided"] = pd.to_numeric(
         df["Total Value of Services Provided"], errors="coerce"
@@ -355,6 +354,7 @@ def clean_cash(input_path):
     df["Region"] = df["State"].map(geography_maps.state_to_region)
     df["Region Number"] = df["Region"].map(geography_maps.region_to_rsn)
     df["Chapter"] = df.apply(geography_maps.assign_chapter, axis=1)
+    df["Region"] = df["Region"].str.upper()
 
     df = geography_maps._add_date_columns(df)
 
@@ -418,6 +418,7 @@ def clean_bulk(input_path):
         ),
         axis=1,
     )
+    df["Region"] = df["Region"].str.upper()
 
     df = df.rename(columns={"Date Distributed": "Date"})
     df = geography_maps._add_date_columns(df)
