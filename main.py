@@ -487,19 +487,19 @@ def cleaner_page_html() -> str:
                         <p>
                             <strong>Special Instructions for Geography and Time Cleaner Uploads:</strong>
                             <br><br>
-                            Export a "Donations by Campaign" style report from Salesforce with the following columns:
+                            Data must contain the following columns:
                             <br><br>
-                            <strong>Primary Campaign Source</strong>
+                            <strong>Amount</strong>
                             <br>
-                            <strong>Payment Amount Received</strong>
+                            <strong>Date</strong>
                             <br>
-                            <strong>Close Date</strong>
+                            <strong>City</strong>
                             <br>
-                            <strong>Mailing City</strong>
+                            <strong>State</strong>
                             <br>
-                            <strong>Mailing State/Province</strong>
-                            <br>
-                            <strong>Mailing Zip/Postal Code</strong>
+                            <strong>Zipcode</strong>
+                            <br><br>
+                            All totals and subtotals must be excluded.
                             <br><br>
                             You can upload multiple files at once. Each row will be assigned a Region, RSN,
                             Chapter, Field Office, Year, Quarter, and Month based on the zip code and city
