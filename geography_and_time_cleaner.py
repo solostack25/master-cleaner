@@ -46,6 +46,16 @@ def clean_multiple_geography_and_time_imports(input_paths, output_path):
 
     df = pd.concat(cleaned_dataframes, ignore_index=True)
 
+    # Exclude any Total/Subtotal rows Salesforce may have left in the
+    # export -- these show up as literal "Total"/"Subtotal" text in one
+    # of the group-by columns instead of real data.
+    exclude_values = {"total", "subtotal", "grand total"}
+    for column in ["Campaign Source", "City", "State"]:
+        if column in df.columns:
+            is_total_row = df[column].astype(str).str.strip().str.lower().isin(exclude_values)
+            df = df[~is_total_row]
+    df = df.reset_index(drop=True)
+
     # "Campaign Source" is the Salesforce grouped-report column -- only
     # populated on the first row of each campaign group, blank on the rest.
     df["Campaign Source"] = df["Campaign Source"].ffill()
