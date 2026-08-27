@@ -85,7 +85,14 @@ def clean_volunteers(input_path, output_path):
 
     df["Contact ID (Total)"] = df["Contact ID (Distinct)"]
 
-    df["Volunteering Value"] = pd.to_numeric(df["Hours"], errors="coerce") * 34.79
+    RATE_CHANGE_DATE = pd.Timestamp("2026-04-01")
+    RATE_BEFORE = 34.79
+    RATE_ON_OR_AFTER = 36.14
+
+    hourly_rate = pd.Series(RATE_BEFORE, index=df.index)
+    hourly_rate[df["Event Start"] >= RATE_CHANGE_DATE] = RATE_ON_OR_AFTER
+
+    df["Volunteering Value"] = pd.to_numeric(df["Hours"], errors="coerce") * hourly_rate
 
     # Program Assigner
     program_assigner_df = pd.read_csv("Word List.csv")
