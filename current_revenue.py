@@ -578,7 +578,7 @@ def clean_multiple_current_revenue_imports(input_paths, input_files_names, outpu
     total_revenue_df.loc[condition, 'State'] = "HQ"
 
     # Makes sure the State column is completely Capitalized
-    total_revenue_df["State"] = total_revenue_df["State"].str.upper()
+    total_revenue_df["State"] = total_revenue_df["State"].astype("string").str.upper()
     total_revenue_df["State"] = total_revenue_df["State"].ffill()
 
     total_revenue_df = total_revenue_df.apply(geography_maps.hq_states, axis=1)
@@ -613,7 +613,7 @@ def clean_multiple_current_revenue_imports(input_paths, input_files_names, outpu
     total_revenue_df["Region Number"] = total_revenue_df["Region"].map(geography_maps.region_to_rsn)
 
     total_revenue_df["Chapter"] = total_revenue_df.apply(geography_maps.assign_chapter, axis=1)
-    total_revenue_df['Region'] = total_revenue_df['Region'].str.upper()
+    total_revenue_df['Region'] = total_revenue_df['Region'].astype("string").str.upper()
 
 
     total_revenue_df = total_revenue_df[["Year", "Quarter", "Month Name", "Month Number", "Region", "Chapter", "State",
@@ -633,7 +633,7 @@ def clean_multiple_current_revenue_imports(input_paths, input_files_names, outpu
     grants_df["Zipcode"] = grants_df["Zipcode"].astype(str).str.extract(r'(\d{1,5})')[0].str.zfill(5)
 
     # Makes sure the State column is completely Capitalized
-    grants_df["State"] = grants_df["State"].str.upper()
+    grants_df["State"] = grants_df["State"].astype("string").str.upper()
 
     grants_df = grants_df.apply(geography_maps.hq_states, axis=1)
 
@@ -648,7 +648,7 @@ def clean_multiple_current_revenue_imports(input_paths, input_files_names, outpu
     grants_df = grants_df.apply(lambda row: geography_maps.assign_field_office(row, True),axis=1)
 
     grants_df["Chapter"] = grants_df.apply(geography_maps.assign_chapter, axis=1)
-    grants_df['Region'] = grants_df['Region'].str.upper()
+    grants_df['Region'] = grants_df['Region'].astype("string").str.upper()
 
     grants_df = geography_maps._add_date_columns(grants_df)
 
