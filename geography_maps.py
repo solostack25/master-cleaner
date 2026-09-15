@@ -29,69 +29,76 @@ def refresh_geo_cache():
     global state_to_region, region_to_rsn, state_to_field_office
     global chapter_lookup, special_overrides, state_splits, mapping
 
-    state_to_region = {
-        row["state"]: row["region"]
-        for row in supabase_client.fetch_all("geo_state_to_region")
-    }
-
-    region_to_rsn = {
-        row["region"]: row["rsn"]
-        for row in supabase_client.fetch_all("geo_region_to_rsn")
-    }
-
-    state_to_field_office = {
-        row["state"]: row["field_office"]
-        for row in supabase_client.fetch_all("geo_state_to_field_office")
-    }
-
-    chapter_lookup = {
-        (row["field_office"], row["region"]): row["chapter"]
-        for row in supabase_client.fetch_all("geo_chapter_map")
-    }
-
-    special_overrides = {
-        row["when_field_office"]: {
-            "region": row.get("set_region"),
-            "rsn": row.get("set_rsn"),
-            "state": row.get("set_state"),
+    try:
+        state_to_region = {
+            row["state"]: row["region"]
+            for row in supabase_client.fetch_all("geo_state_to_region")
         }
-        for row in supabase_client.fetch_all("geo_special_overrides")
-        if row.get("active")
-    }
 
-    # Guaranteed fallback chain: any state that isn't recognized elsewhere
-    # gets treated as "HQ", and HQ has to always resolve to a real region/
-    # RSN/office/chapter no matter what Supabase actually has configured.
-    # This is set with setdefault (not overwritten) so an admin-edited
-    # value in Supabase always takes priority over this baked-in default --
-    # it only fills the gap if the row is missing or unreachable.
-    state_to_region.setdefault("HQ", "Unassigned")
-    region_to_rsn.setdefault("Unassigned", 8)
-    state_to_field_office.setdefault("HQ", "Unassigned")
-    chapter_lookup.setdefault(("Unassigned", "Unassigned"), "National")
-    chapter_lookup.setdefault(("__default__", "Unassigned"), "National")
+        region_to_rsn = {
+            row["region"]: row["rsn"]
+            for row in supabase_client.fetch_all("geo_region_to_rsn")
+        }
 
-    splits_rows = supabase_client.fetch_all("geo_state_splits_cities")
-    if splits_rows:
-        splits_df = pd.DataFrame(splits_rows)
-        splits_df = splits_df.rename(columns={
-            "zip_code": "Zip Code",
-            "main_city": "Main City",
-            "county": "County",
-            "state": "STATE",
-            "assigned_to": "ASSIGNED TO",
-        })
-        splits_df["Zip Code"] = (
-            splits_df["Zip Code"].fillna("").astype(str).str.split(".").str[0].str.zfill(5)
-        )
-        state_splits = splits_df
-    else:
-        state_splits = pd.DataFrame(columns=["Zip Code", "Main City", "County", "STATE", "ASSIGNED TO"])
+        state_to_field_office = {
+            row["state"]: row["field_office"]
+            for row in supabase_client.fetch_all("geo_state_to_field_office")
+        }
 
-    mapping = {
-        row["keyword"]: row["program"]
-        for row in supabase_client.fetch_all("geo_keyword_to_program")
-    }
+        chapter_lookup = {
+            (row["field_office"], row["region"]): row["chapter"]
+            for row in supabase_client.fetch_all("geo_chapter_map")
+        }
+
+        special_overrides = {
+            row["when_field_office"]: {
+                "region": row.get("set_region"),
+                "rsn": row.get("set_rsn"),
+                "state": row.get("set_state"),
+            }
+            for row in supabase_client.fetch_all("geo_special_overrides")
+            if row.get("active")
+        }
+
+        splits_rows = supabase_client.fetch_all("geo_state_splits_cities")
+        if splits_rows:
+            splits_df = pd.DataFrame(splits_rows)
+            splits_df = splits_df.rename(columns={
+                "zip_code": "Zip Code",
+                "main_city": "Main City",
+                "county": "County",
+                "state": "STATE",
+                "assigned_to": "ASSIGNED TO",
+            })
+            splits_df["Zip Code"] = (
+                splits_df["Zip Code"].fillna("").astype(str).str.split(".").str[0].str.zfill(5)
+            )
+            state_splits = splits_df
+        else:
+            state_splits = pd.DataFrame(columns=["Zip Code", "Main City", "County", "STATE", "ASSIGNED TO"])
+
+        mapping = {
+            row["keyword"]: row["program"]
+            for row in supabase_client.fetch_all("geo_keyword_to_program")
+        }
+    except supabase_client.SupabaseConnectionError as error:
+        # Supabase is unreachable (paused project, bad credentials, etc).
+        # Whatever was already cached from a previous successful refresh
+        # stays as-is (not wiped to empty) -- this just means today's admin
+        # edits, if any, won't be picked up until Supabase is reachable
+        # again. The finally block below still guarantees the core HQ/
+        # Unassigned fallback chain works even when this happens.
+        print(f"[geography_maps] Supabase unreachable during refresh_geo_cache(): {error}")
+    finally:
+        # Guaranteed fallback chain -- always applied, whether or not the
+        # block above succeeded, so HQ/Unassigned can never break the app
+        # even if that row is missing from Supabase or Supabase itself is
+        # completely unreachable right now.
+        state_to_region.setdefault("HQ", "Unassigned")
+        region_to_rsn.setdefault("Unassigned", 8)
+        state_to_field_office.setdefault("HQ", "Unassigned")
+        chapter_lookup.setdefault(("Unassigned", "Unassigned"), "National")
+        chapter_lookup.setdefault(("__default__", "Unassigned"), "National")
 
 
 # Load once at import time. If Supabase isn't configured yet (e.g. local
