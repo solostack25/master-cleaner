@@ -484,11 +484,26 @@ def create_total_revenue_summary(df):
             )
         ]
 
+        # Pull the actual State values behind any blank/unmapped Field
+        # Office rows directly from the source data, so the error names
+        # exactly which states need a Field Office added.
+        blank_office_states = []
+        if "STATE" in df.columns:
+            blank_office_rows = df[df["FIELD OFFICE"].isna()]
+            blank_office_states = sorted(blank_office_rows["STATE"].dropna().unique())
+
         missing_amount = unmatched["PAYMENT AMOUNT"].sum()
         unmatched_offices = sorted(
             str(office) if pd.notna(office) else "(blank/unmapped State)"
             for office in unmatched["FIELD OFFICE"].unique()
         )
+
+        state_detail = ""
+        if blank_office_states:
+            state_detail = (
+                f" The specific state(s) with no Field Office mapped: "
+                f"{', '.join(blank_office_states)}."
+            )
 
         # Append the unmatched rows so this run's total still reflects
         # every real dollar, even though we can't place them on the map.
@@ -501,10 +516,10 @@ def create_total_revenue_summary(df):
 
         raise ValueError(
             f"${missing_amount:,.2f} of revenue is attributed to Field Office name(s) "
-            f"not in the geography config: {', '.join(unmatched_offices)}. This usually "
-            "means a Field Office needs to be added on the Geography Admin page, or a "
-            "raw Field Office/Region value needs a mapping rule added to the cleaner. "
-            "No revenue was dropped -- fix the mapping and re-run."
+            f"not in the geography config: {', '.join(unmatched_offices)}.{state_detail} "
+            "This usually means a Field Office needs to be added on the Geography Admin "
+            "page, or a raw Field Office/Region value needs a mapping rule added to the "
+            "cleaner. No revenue was dropped -- fix the mapping and re-run."
         )
 
     return total_revenue_df
