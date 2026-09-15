@@ -458,6 +458,49 @@ def create_total_revenue_summary(df):
         errors="ignore"
     )
 
+    # Safety net: the merge above only keeps rows that match the fixed
+    # zero-value grid. If any real Field Office/Year/Month combination in
+    # the actual data doesn't match anything in that grid, its dollars
+    # would otherwise vanish silently instead of erroring. Catch that here
+    # by comparing totals before and after, and if anything's missing,
+    # append it as extra rows so the money is never lost -- and raise a
+    # clear error naming exactly what didn't match, so it gets fixed at
+    # the source (usually the zero_values starter CSV needs a new office
+    # added) instead of quietly under-reporting revenue.
+    expected_total = revenue_summary["PAYMENT AMOUNT"].sum()
+    actual_total = total_revenue_df["TOTAL REVENUE"].sum()
+
+    if abs(expected_total - actual_total) > 0.01:
+        matched_keys = set(
+            zip(total_revenue_df["FIELD OFFICE"], total_revenue_df["YEAR"], total_revenue_df["MONTH NUMBER"])
+        )
+        unmatched = revenue_summary[
+            ~revenue_summary.apply(
+                lambda row: (row["FIELD OFFICE"], row["YEAR"], row["MONTH NUMBER"]) in matched_keys,
+                axis=1,
+            )
+        ]
+
+        missing_amount = unmatched["PAYMENT AMOUNT"].sum()
+        unmatched_offices = sorted(unmatched["FIELD OFFICE"].dropna().unique())
+
+        # Append the unmatched rows so this run's total still reflects
+        # every real dollar, even though we can't place them on the map.
+        unmatched_for_append = unmatched.rename(columns={"PAYMENT AMOUNT": "TOTAL REVENUE"})
+        for missing_col in total_revenue_df.columns:
+            if missing_col not in unmatched_for_append.columns:
+                unmatched_for_append[missing_col] = pd.NA
+        unmatched_for_append = unmatched_for_append[total_revenue_df.columns]
+        total_revenue_df = pd.concat([total_revenue_df, unmatched_for_append], ignore_index=True)
+
+        raise ValueError(
+            f"${missing_amount:,.2f} of revenue is attributed to Field Office name(s) "
+            f"not in the geography config: {', '.join(unmatched_offices)}. This usually "
+            "means a Field Office needs to be added on the Geography Admin page, or a "
+            "raw Field Office/Region value needs a mapping rule added to the cleaner. "
+            "No revenue was dropped -- fix the mapping and re-run."
+        )
+
     return total_revenue_df
 
 def subtract_payment_amount_by_month_year_office(df1, df2):
