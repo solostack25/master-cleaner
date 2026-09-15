@@ -438,7 +438,10 @@ def create_total_revenue_summary(df):
             "MONTH NUMBER"
         ],
         as_index=False,
-        sort=False
+        sort=False,
+        dropna=False,  # otherwise a row with a missing/unmapped Field Office
+                       # silently vanishes here, before the safety check below
+                       # ever gets a chance to catch it
     )["PAYMENT AMOUNT"].sum()
 
     total_revenue_df = total_revenue_df.merge(
@@ -482,7 +485,10 @@ def create_total_revenue_summary(df):
         ]
 
         missing_amount = unmatched["PAYMENT AMOUNT"].sum()
-        unmatched_offices = sorted(unmatched["FIELD OFFICE"].dropna().unique())
+        unmatched_offices = sorted(
+            str(office) if pd.notna(office) else "(blank/unmapped State)"
+            for office in unmatched["FIELD OFFICE"].unique()
+        )
 
         # Append the unmatched rows so this run's total still reflects
         # every real dollar, even though we can't place them on the map.
