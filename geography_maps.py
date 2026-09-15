@@ -59,6 +59,18 @@ def refresh_geo_cache():
         if row.get("active")
     }
 
+    # Guaranteed fallback chain: any state that isn't recognized elsewhere
+    # gets treated as "HQ", and HQ has to always resolve to a real region/
+    # RSN/office/chapter no matter what Supabase actually has configured.
+    # This is set with setdefault (not overwritten) so an admin-edited
+    # value in Supabase always takes priority over this baked-in default --
+    # it only fills the gap if the row is missing or unreachable.
+    state_to_region.setdefault("HQ", "Unassigned")
+    region_to_rsn.setdefault("Unassigned", 8)
+    state_to_field_office.setdefault("HQ", "Unassigned")
+    chapter_lookup.setdefault(("Unassigned", "Unassigned"), "National")
+    chapter_lookup.setdefault(("__default__", "Unassigned"), "National")
+
     splits_rows = supabase_client.fetch_all("geo_state_splits_cities")
     if splits_rows:
         splits_df = pd.DataFrame(splits_rows)
