@@ -96,7 +96,11 @@ def clean_multiple_geography_and_time_imports(input_paths, output_path):
 
     # "Campaign Source" is the Salesforce grouped-report column -- only
     # populated on the first row of each campaign group, blank on the rest.
-    df["Campaign Source"] = df["Campaign Source"].ffill()
+    # It's optional: single-program cash exports (HP, DRS, B2S, TH, RSCE,
+    # Counselling, FATE, etc.) don't have it at all, so only ffill when a
+    # file actually produced the column.
+    if "Campaign Source" in df.columns:
+        df["Campaign Source"] = df["Campaign Source"].ffill()
 
     df["Zipcode"] = df["Zipcode"].astype(str).str.extract(r"(\d{1,5})")[0].str.zfill(5)
     df["State"] = df["State"].astype(str).str.upper().str.strip()
